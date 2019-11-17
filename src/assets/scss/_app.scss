@@ -1,0 +1,133 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index.scss";
+@import "./variables";
+
+*,
+body {
+  background-color: $dark;
+}
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: $white;
+
+  // @overrides
+  .btn-success {
+    color: $white;
+    background-color: $green;
+    border-color: $green;
+  }
+
+  // @navigation
+
+  .navigation {
+    height: 60px;
+    margin-bottom: 30px;
+
+    .logo {
+      i {
+        font-size: 2rem;
+        color: $green;
+      }
+    }
+
+    .navbar {
+      border-bottom: 1px solid $white;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+      color: $white;
+      font-style: normal;
+      &.active {
+        color: $active-route;
+      }
+    }
+  }
+
+  .content {
+    border: 1px solid $white;
+    padding: 1.5rem;
+  }
+
+  .table {
+    color: $white;
+  }
+
+  // ERROR
+  .danger {
+    color: $red;
+  }
+
+  // TODOS
+  .add {
+    background: transparent;
+  }
+
+  #deleteConfirmation .modal {
+    background-color: white;
+  }
+  .modal-header .close {
+    color: $white;
+  }
+
+  // PAGINATION
+  .page-link {
+    color: $green;
+    background-color: $dark;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: $green;
+    border-color: $green;
+  }
+
+  .page-item.disabled .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: $dark;
+  }
+  .page-item.disabled {
+    cursor: not-allowed;
+  }
+
+  .table {
+    td {
+      vertical-align: middle;
+    }
+  }
+  .view-todo,
+  .edit-todo,
+  .delete-todo {
+    font-size: 20px;
+    padding: 0.4rem;
+    cursor: pointer;
+  }
+
+  .view-todo {
+    color: $green;
+  }
+
+  .edit-todo {
+    color: $yellow;
+  }
+
+  .delete-todo {
+    color: $red;
+  }
+  // forms
+
+  // .form-control, .custom-select {
+  //   background-color: $dark;
+  //   color: $white;
+  // }
+
+  .show-password {
+    background-color: transparent;
+  }
+}

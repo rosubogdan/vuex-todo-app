@@ -1,0 +1,25 @@
+@import './variables';
+
+.HOME {
+  .padding-15 {
+    padding: 15px;
+  }
+
+  .card-wrapper {
+    border: 1px solid $white;
+    padding: 2rem;
+
+    i {
+      font-size: 6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .copy {
+    padding: 2rem;
+  }
+}
