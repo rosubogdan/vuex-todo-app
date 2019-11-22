@@ -3,7 +3,7 @@
     <b-row class="text-center mb-3">
       <b-col sm=12>
         <h3>
-          <i class="far fa-check-circle"></i> {{CONTENT.HEADER}}
+          <i class="far fa-check-circle"></i> {{CONTENT.TODO.HEADER}}
         </h3>
       </b-col>
     </b-row>
@@ -17,11 +17,12 @@
              class="mb-3">
         <b-form-group class="mb-0">
           <b-input-group>
-            <b-form-input v-model="searchTerm"
+            <b-form-input id="filterInput"
                           type="search"
-                          id="filterInput"
-                          size="lg"
-                          placeholder="Type to filter items"></b-form-input>
+                          v-model.trim="searchTerm"
+                          :placeholder="CONTENT.INPUT.SEARCH_PLACEHOLDER"
+                          :size="SIZE">
+            </b-form-input>
           </b-input-group>
         </b-form-group>
       </b-col>
@@ -29,11 +30,12 @@
              md="2"
              lg="2">
         <b-form-group class="mb-3">
-          <b-form-select v-model="perPage"
-                         id="perPageSelect"
-                         size="lg"
+          <b-form-select id="perPageSelect"
                          title="Per page"
-                         :options="FILTER_VALUES"></b-form-select>
+                         v-model="perPage"
+                         :options="FILTER_VALUES"
+                         :size="SIZE">
+          </b-form-select>
         </b-form-group>
       </b-col>
 
@@ -41,17 +43,17 @@
              md="1"
              lg="1">
         <b-button variant="success"
-                  size="lg"
                   alt="Add new todo"
                   title="Add new todo"
-                  @click="addNew = !addNew">
+                  @click="addNew = !addNew"
+                  :size="SIZE">
           <i class="fas fa-plus add"></i>
         </b-button>
       </b-col>
     </b-row>
 
     <!-- ADD NEW TODO -->
-    <!-- <AddTodoComponent :add-new="addNew" /> -->
+    <AddTodoComponent :add-new="addNew" />
 
     <!-- TABLE -->
     <b-row class="mb-3">
@@ -59,6 +61,9 @@
         <b-table bordered
                  dark
                  hover
+                 responsive="sm"
+                 :sticky-header="true"
+                 :no-border-collapse="true"
                  :busy="isBusy"
                  :items="ALL_TODOS"
                  :fields="TABLE_FIELDS"
@@ -69,40 +74,62 @@
           <template v-slot:table-busy>
             <div class="text-center my-2">
               <b-spinner class="align-middle"></b-spinner>
-              <strong> Loading... </strong>
+              <strong> {{CONTENT.DEFAULT.LOADING}} </strong>
             </div>
+          </template>
+
+          <template slot="status"
+                    slot-scope="row">
+            {{row.item.status ? CONTENT.DEFAULT.STATUS.COMPLETE: CONTENT.DEFAULT.STATUS.INCOMPLETE}}
+          </template>
+
+          <template slot="priority"
+                    slot-scope="row">
+            {{getPriority(row.item.priority) }}
           </template>
 
           <template slot="action"
                     slot-scope="row">
 
-            <i class="view-todo"
+            <i title="View"
+               class="view-todo"
                :class="[row.detailsShowing ? 'fas fa-eye-slash': 'far fa-eye']"
-               @click="row.toggleDetails"
-               title="View"></i>
+               @click="row.toggleDetails"></i>
 
-            <i class="far fa-edit edit-todo"
-               title="Edit"></i>
+            <i title="Edit"
+               class="far fa-edit edit-todo"></i>
 
-            <i class="fas fa-trash-alt delete-todo"
-               @click="showConfirmationModal(row.item.id)"
-               title="Delete"></i>
-
-            <!-- <b-form-checkbox class="toggle-state"
-                             v-bind:id="'status-' + row.item.id"
-                             v-model="row.item.completed"
-                             @change="toggleTodo(row.item)">
-            </b-form-checkbox> -->
+            <i title="Delete"
+               class="fas fa-trash-alt delete-todo"
+               @click="showConfirmationModal(row.item.id)"></i>
 
           </template>
 
           <template v-slot:row-details="row">
-            <b-card>
-              <ul>
-                <li v-for="(value, key) in row.item"
-                    :key="key">{{ key }}: {{ value }}</li>
-              </ul>
-            </b-card>
+            <!-- <b-card bg-variant="light"
+                    text-variant="white"
+                    no-body> -->
+              <b-tabs active-nav-item-class="text-success"
+                      fill>
+                <b-tab title="Details"
+                       active>
+                  <h1>{{row.item.title}}</h1>
+                  <p>{{row.item.description}}</p>
+                  <p>Priority: {{getPriority(row.item.priority)}}</p>
+                  <p>Status: {{row.item.status ? CONTENT.DEFAULT.STATUS.COMPLETE: CONTENT.DEFAULT.STATUS.INCOMPLETE}}</p>
+                </b-tab>
+                <b-tab title="Edit">
+                  <p>Edit tab</p>
+                  <TodoForm :todo="row.item"
+                            :add-new="false" />
+
+                  <!-- Load TodoForm -->
+                </b-tab>
+                <b-tab title="Delete">
+                  <p>I'm the tab with the very, very long title</p>
+                </b-tab>
+              </b-tabs>
+            <!-- </b-card> -->
           </template>
 
         </b-table>
@@ -138,9 +165,12 @@
   import { mapGetters } from "vuex";
   import { Component, Vue } from "vue-property-decorator";
 
-  // import AddTodoComponent from "@/components/Todos/AddTodo.component.vue";
+  import AddTodoComponent from "@/components/Todos/AddTodo.component.vue";
+  import TodoForm from "@/components/Todos/TodoForm.component.vue";
 
-  import { CONTENT, TABLE_FIELDS, STORE_TODOS_MODULE } from "@/constants";
+  import { AddTodoFrom } from "@/models/forms/addTodoForm";
+
+  import { CONTENT, SIZE, TABLE_FIELDS } from "@/constants";
   import {
     ALL_TODOS,
     SELECTED_FILTER,
@@ -156,14 +186,17 @@
 
   import Todo from "@/models/todo/todo";
 
-  import { db } from "@/main";
+  import { getPriority } from "@/services";
+
+  // import { db } from "@/main";
 
   @Component({
-    components: {},
+    components: { AddTodoComponent, TodoForm },
     computed: mapGetters({ ALL_TODOS, SELECTED_FILTER, FILTER_VALUES })
   })
   export default class TodosComponent extends Vue {
-    private CONTENT = CONTENT.TODOS;
+    private SIZE = SIZE.DEFAULT;
+    private CONTENT = CONTENT;
     private TABLE_FIELDS = TABLE_FIELDS;
     private perPage: number = this.$store.getters[SELECTED_FILTER];
     private searchTerm = null;
@@ -173,6 +206,8 @@
 
     private isBusy: boolean = true;
     private addNew: boolean = false;
+
+    private getPriority = getPriority;
 
     constructor() {
       super();
@@ -185,10 +220,6 @@
       } else {
         this.isBusy = false;
       }
-    }
-
-    private filterTodos() {
-      this.$store.dispatch(FILTER_TODOS_ACTION, this.perPage);
     }
 
     public toggleTodo(todo: Todo): void {

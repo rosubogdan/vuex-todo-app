@@ -6,7 +6,7 @@ import { mutations } from './mutations';
 const state: State = {
   todos: [],
   selectedFilter: 5,
-  filterValues: [200, 100, 50, 20, 10, 5],
+  filterValues: [5, 10, 20, 50],
 };
 
 export default {

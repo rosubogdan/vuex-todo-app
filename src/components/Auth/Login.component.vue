@@ -2,7 +2,7 @@
   <div class="wrapper">
     <b-row class="text-center mb-3">
       <b-col sm=12>
-        <h3>{{CONTENT.HEADER}}</h3>
+        <h3>{{CONTENT.LOGIN.HEADER}}</h3>
       </b-col>
     </b-row>
     <b-row class="text-center mb-3">
@@ -17,70 +17,71 @@
 
             <!-- Email -->
             <section class="email">
-
-              <label class="sr-only"
-                     for="email">{{CONTENT.EMAIL_LABEL}}</label>
               <b-input id="email"
                        class="mb-3"
                        type="email"
-                       size="lg"
-                       required
-                       :placeholder="CONTENT.EMAIL_PLACEHOLDER"
-                       v-model="form.email"></b-input>
+                       v-model.trim="form.email"
+                       :placeholder="CONTENT.INPUT.EMAIL_PLACEHOLDER"
+                       :size="SIZE">
+              </b-input>
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
                 <span class="danger"
-                      v-if="!$v.form.email.required">{{CONTENT.FIELD_REQUIRED_ERROR}}</span>
+                      v-if="!$v.form.email.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.EMAIL)}}
+                </span>
                 <span class="danger"
-                      v-if="!$v.form.email.email">{{CONTENT.EMAIL_INVALID_ERROR}}</span>
+                      v-if="!$v.form.email.email">
+                  {{VALIDATION.EMAIL_INVALID_ERROR()}}
+                </span>
               </div>
             </section>
 
             <!-- Password -->
             <section class="password">
-
-              <label class="sr-only"
-                     for="password">{{CONTENT.PASSWORD_LABEL}}</label>
-
               <b-input-group class="login-password">
                 <b-form-input id="password"
-                              :placeholder="CONTENT.PASSWORD_LABEL"
-                              :type="show ? 'text': 'password'"
-                              size="lg"
-                              v-model="form.password"
-                              class="mb-3"></b-form-input>
+                              class="mb-3"
+                              v-model.trim="form.password"
+                              :placeholder="CONTENT.INPUT.PASSWORD_PLACEHOLDER"
+                              :type="show ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
+                              :size="SIZE">
+                </b-form-input>
                 <b-input-group-append>
                   <b-button variant="success"
-                            size="lg"
                             class="mb-3"
-                            @click="toggleShowHide()">
-                    <i class="show-password"
-                       :class="[show ? 'fas fa-eye-slash': 'far fa-eye']"
-                       title="View"></i>
+                            @click="toggleShowHide()"
+                            :size="SIZE">
+                    <i title="View"
+                       class="show-password"
+                       :class="[show ? 'fas fa-eye-slash': 'far fa-eye']">
+                    </i>
                   </b-button>
                 </b-input-group-append>
               </b-input-group>
-
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
 
                 <span class="text-left danger"
-                      v-if="!$v.form.password.required">{{CONTENT.FIELD_REQUIRED_ERROR}}</span>
+                      v-if="!$v.form.password.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.PASSWORD)}}
+                </span>
               </div>
             </section>
 
             <!-- Invalid credentials validation -->
             <div class="errors text-left mb-3"
                  v-if="loginError">
-
               <span class="text-left danger">{{loginError}}</span>
             </div>
 
             <!-- Submit -->
             <b-button variant="success"
-                      type="submit">{{CONTENT.LOGIN_BUTTON}}</b-button>
+                      type="submit">
+              {{CONTENT.BUTTON.LOGIN}}
+            </b-button>
           </b-form>
         </div>
       </b-col>
@@ -92,20 +93,25 @@
   import { Component, Vue } from "vue-property-decorator";
   import { mapGetters } from "vuex";
   import { validationMixin } from "vuelidate";
-  import { LoginValidation } from "@/validations/loginForm.validation";
-  import { CONTENT, CONTENT_ROUTES } from "@/constants";
+  import { LoginFormValidation, VALIDATION } from "@/validations";
+
+  import { CONTENT, CONTENT_ROUTES, SIZE } from "@/constants";
 
   import { LOGIN_STATUS, LOGIN_MESSAGE } from "@/store/modules/auth/getters";
   import { LOGIN_ACTION } from "@/store/modules/auth/actions";
+
   import { LoginForm } from "@/models/forms/loginForm";
 
   @Component({
     mixins: [validationMixin],
-    validations: LoginValidation,
+    validations: LoginFormValidation,
     computed: mapGetters({ LOGIN_STATUS, LOGIN_MESSAGE })
   })
   export default class LoginComponent extends Vue {
-    private CONTENT = CONTENT.LOGIN;
+    private SIZE = SIZE.DEFAULT;
+    private CONTENT = CONTENT;
+    private VALIDATION = VALIDATION;
+
     private form: LoginForm = <LoginForm>{};
     private loginError = null;
     private show: boolean = false;
@@ -125,8 +131,5 @@
     }
   }
 </script>
-<style lang="scss" scoped>
-  @import "@/assets/scss/_login.scss";
-</style>
 
 

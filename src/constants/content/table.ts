@@ -3,10 +3,15 @@ export const TABLE_FIELDS = {
     label: 'Title',
     sortable: true,
   },
-  completed: {
-    label: 'Completed',
+  status: {
+    label: 'Status',
     sortable: true,
   },
+  priority: {
+    label: 'Priority',
+    sortable: true,
+  },
+
   action: {
     label: 'Action',
   },

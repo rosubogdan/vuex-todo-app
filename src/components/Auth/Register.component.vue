@@ -2,7 +2,7 @@
   <div class="wrapper">
     <b-row class="text-center mb-3">
       <b-col sm=12>
-        <h3>{{CONTENT.HEADER}}</h3>
+        <h3>{{CONTENT.REGISTER.HEADER}}</h3>
       </b-col>
     </b-row>
     <b-row class="text-center mb-3">
@@ -17,80 +17,82 @@
 
             <!-- Email -->
             <section class="email">
-              <label class="sr-only"
-                     for="email">{{CONTENT.EMAIL_LABEL}}</label>
               <b-input id="email"
                        class="mb-3"
                        type="email"
-                       size="lg"
-                       required
-                       :placeholder="CONTENT.EMAIL_PLACEHOLDER"
-                       v-model="form.email"></b-input>
+                       v-model.trim="form.email"
+                       :placeholder="CONTENT.INPUT.EMAIL_PLACEHOLDER"
+                       :size="SIZE">
+              </b-input>
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
                 <span class="danger"
-                      v-if="!$v.form.email.required">{{CONTENT.FIELD_REQUIRED_ERROR}}</span>
+                      v-if="!$v.form.email.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.EMAIL)}}
+                </span>
                 <span class="danger"
-                      v-if="!$v.form.email.email">{{CONTENT.EMAIL_INVALID_ERROR}}</span>
+                      v-if="!$v.form.email.email">
+                  {{VALIDATION.EMAIL_INVALID_ERROR()}}
+                </span>
               </div>
             </section>
 
             <!-- Password -->
             <section class="password">
-              <label class="sr-only"
-                     for="password">{{CONTENT.PASSWORD_LABEL}}</label>
-
-              <b-input-group class="register-password"
-                             ref="password">
+              <b-input-group class="login-password">
                 <b-form-input id="password"
-                              :placeholder="CONTENT.PASSWORD_LABEL"
-                              :type="showPassword ? 'text': 'password'"
-                              size="lg"
-                              v-model="form.password"
-                              class="mb-3"></b-form-input>
+                              class="mb-3"
+                              v-model.trim="form.password"
+                              :placeholder="CONTENT.INPUT.PASSWORD_PLACEHOLDER"
+                              :type="showPassword ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
+                              :size="SIZE">
+                </b-form-input>
                 <b-input-group-append>
                   <b-button variant="success"
-                            size="lg"
                             class="mb-3"
-                            @click="showPassword = !showPassword">
-                    <i class="show-password"
-                       :class="[showPassword ? 'fas fa-eye-slash': 'far fa-eye']"></i>
+                            @click="showPassword = !showPassword"
+                            :size="SIZE">
+                    <i title="View"
+                       class="show-password"
+                       :class="[showPassword ? 'fas fa-eye-slash': 'far fa-eye']">
+                    </i>
                   </b-button>
                 </b-input-group-append>
               </b-input-group>
-
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
 
                 <span class="text-left danger"
-                      v-if="!$v.form.password.required">{{CONTENT.FIELD_REQUIRED_ERROR}}</span>
+                      v-if="!$v.form.password.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.PASSWORD)}}
+                </span>
                 <span class="text-left danger"
-                      v-if="!$v.form.password.minLength">{{CONTENT.MIN_LENGTH_ERROR(CONTENT.PASSWORD_LABEL,$v.form.password.$params.minLength.min )}}</span>
+                      v-if="!$v.form.password.minLength">
+                  {{VALIDATION.MIN_LENGTH_ERROR(CONTENT.INPUT.PASSWORD,$v.form.password.$params.minLength.min)}}
+                </span>
               </div>
             </section>
 
             <!-- Confirm password -->
             <section class="confirmPassword">
-              <label class="sr-only"
-                     for="confirm_password">{{CONTENT.CONFIRM_PASSWORD_LABEL}}</label>
-
-              <b-input-group class="register-confirm-password"
-                             ref="'confirm'">
+              <b-input-group class="register-confirm-password">
                 <b-form-input id="confirm_password"
-                              :placeholder="CONTENT.CONFIRM_PASSWORD_LABEL"
-                              :type="showConfirmPassword ? 'text': 'password'"
-                              size="lg"
-                              v-model="form.confirmPassword"
-                              class="mb-3"></b-form-input>
+                              class="mb-3"
+                              v-model.trim="form.confirmPassword"
+                              :placeholder="CONTENT.INPUT.CONFIRM_PASSWORD_PLACEHOLDER"
+                              :type="showConfirmPassword ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
+                              :size="SIZE">
+                </b-form-input>
                 <b-input-group-append>
                   <b-button variant="success"
-                            size="lg"
                             class="mb-3"
+                            :size="SIZE"
                             @click="showConfirmPassword = ! showConfirmPassword">
                     <i class="show-password"
-                       :class="[showConfirmPassword ? 'fas fa-eye-slash': 'far fa-eye']"></i>
+                       :class="[showConfirmPassword ? 'fas fa-eye-slash': 'far fa-eye']">
+                    </i>
                   </b-button>
                 </b-input-group-append>
               </b-input-group>
@@ -100,9 +102,13 @@
                    v-if="$v.form.$error">
 
                 <span class="text-left danger"
-                      v-if="!$v.form.confirmPassword.required">{{CONTENT.FIELD_REQUIRED_ERROR}}</span>
+                      v-if="!$v.form.confirmPassword.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.CONFIRM_PASSWORD)}}
+                </span>
                 <span class="text-left danger"
-                      v-else-if="!$v.form.confirmPassword.sameAsPassword">{{CONTENT.PASSWORD_MATCH_EROR}}</span>
+                      v-else-if="!$v.form.confirmPassword.sameAsPassword">
+                  {{VALIDATION.PASSWORD_MATCH_EROR()}}
+                </span>
               </div>
             </section>
 
@@ -115,7 +121,9 @@
 
             <!-- Submit -->
             <b-button variant="success"
-                      type="submit">{{CONTENT.REGISTER_BUTTON}}</b-button>
+                      type="submit">
+              {{CONTENT.BUTTON.REGISTER}}
+            </b-button>
           </b-form>
         </div>
       </b-col>
@@ -127,8 +135,8 @@
   import { Component, Vue } from "vue-property-decorator";
   import { mapGetters } from "vuex";
   import { validationMixin } from "vuelidate";
-  import { RegisterValidation } from "@/validations/registerForm.validation";
-  import { CONTENT, CONTENT_ROUTES } from "@/constants";
+  import { RegisterFormValidation, VALIDATION } from "@/validations";
+  import { CONTENT, CONTENT_ROUTES, SIZE } from "@/constants";
 
   import {
     REGISTER_STATUS,
@@ -139,12 +147,16 @@
 
   @Component({
     mixins: [validationMixin],
-    validations: RegisterValidation,
+    validations: RegisterFormValidation,
     computed: mapGetters({ REGISTER_STATUS, REGISTER_MESSAGE })
   })
   export default class RegisterComponent extends Vue {
-    private CONTENT = CONTENT.REGISTER;
+    private SIZE = SIZE.DEFAULT;
+    private CONTENT = CONTENT;
+    private VALIDATION = VALIDATION;
+
     private form: RegisterForm = <RegisterForm>{};
+
     private registerError = null;
     private showPassword: boolean = false;
     private showConfirmPassword: boolean = false;
