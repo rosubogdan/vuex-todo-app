@@ -7,7 +7,17 @@ export const DEFAULT = {
     TEXT: 'text',
     PASSWORD: 'password'
   },
-  LOADING: 'Loading ...'
+  LOADING: 'Loading ...',
+  TABS: {
+    DETAILS: 'Info',
+    EDIT: 'Edit',
+    DELETE: 'Delete'
+  },
+  TITLE: {
+    ADD: 'Add',
+    SHOW: 'Show',
+    CLOSE: 'Close'
+  }
 };
 
 export const APP = {
@@ -35,6 +45,7 @@ export const HOME = {
 export const TODO = {
   HEADER: 'Todos',
   FILTER_TODOS: 'Per page:',
+  DELETE_CONFIRMATION: 'Are you sure you want to delete this item?'
 };
 
 export const BUY = {};
@@ -70,7 +81,10 @@ export const BUTTON = {
   REGISTER: 'Register',
   GO: 'GO!',
   ADD: 'Add',
-  SAVE: 'Save'
+  SAVE: 'Save',
+  YES: 'Yes',
+  NO: 'No',
+  CANCEL: 'Cancel'
 };
 
 export const CONTENT = {

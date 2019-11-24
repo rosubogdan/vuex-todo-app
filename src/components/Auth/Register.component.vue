@@ -22,7 +22,7 @@
                        type="email"
                        v-model.trim="form.email"
                        :placeholder="CONTENT.INPUT.EMAIL_PLACEHOLDER"
-                       :size="SIZE">
+                       :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
               <div class="errors text-left mb-3"
@@ -46,13 +46,13 @@
                               v-model.trim="form.password"
                               :placeholder="CONTENT.INPUT.PASSWORD_PLACEHOLDER"
                               :type="showPassword ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
-                              :size="SIZE">
+                              :size="SIZE.DEFAULT">
                 </b-form-input>
                 <b-input-group-append>
                   <b-button variant="success"
                             class="mb-3"
                             @click="showPassword = !showPassword"
-                            :size="SIZE">
+                            :size="SIZE.DEFAULT">
                     <i title="View"
                        class="show-password"
                        :class="[showPassword ? 'fas fa-eye-slash': 'far fa-eye']">
@@ -83,12 +83,12 @@
                               v-model.trim="form.confirmPassword"
                               :placeholder="CONTENT.INPUT.CONFIRM_PASSWORD_PLACEHOLDER"
                               :type="showConfirmPassword ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
-                              :size="SIZE">
+                              :size="SIZE.DEFAULT">
                 </b-form-input>
                 <b-input-group-append>
                   <b-button variant="success"
                             class="mb-3"
-                            :size="SIZE"
+                            :size="SIZE.DEFAULT"
                             @click="showConfirmPassword = ! showConfirmPassword">
                     <i class="show-password"
                        :class="[showConfirmPassword ? 'fas fa-eye-slash': 'far fa-eye']">
@@ -151,7 +151,7 @@
     computed: mapGetters({ REGISTER_STATUS, REGISTER_MESSAGE })
   })
   export default class RegisterComponent extends Vue {
-    private SIZE = SIZE.DEFAULT;
+    private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 

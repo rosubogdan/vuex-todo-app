@@ -22,7 +22,7 @@
                        type="email"
                        v-model.trim="form.email"
                        :placeholder="CONTENT.INPUT.EMAIL_PLACEHOLDER"
-                       :size="SIZE">
+                       :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
               <div class="errors text-left mb-3"
@@ -46,13 +46,13 @@
                               v-model.trim="form.password"
                               :placeholder="CONTENT.INPUT.PASSWORD_PLACEHOLDER"
                               :type="show ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
-                              :size="SIZE">
+                              :size="SIZE.DEFAULT">
                 </b-form-input>
                 <b-input-group-append>
                   <b-button variant="success"
                             class="mb-3"
                             @click="toggleShowHide()"
-                            :size="SIZE">
+                            :size="SIZE.DEFAULT">
                     <i title="View"
                        class="show-password"
                        :class="[show ? 'fas fa-eye-slash': 'far fa-eye']">
@@ -108,7 +108,7 @@
     computed: mapGetters({ LOGIN_STATUS, LOGIN_MESSAGE })
   })
   export default class LoginComponent extends Vue {
-    private SIZE = SIZE.DEFAULT;
+    private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 

@@ -21,7 +21,7 @@
                           type="search"
                           v-model.trim="searchTerm"
                           :placeholder="CONTENT.INPUT.SEARCH_PLACEHOLDER"
-                          :size="SIZE">
+                          :size="SIZE.DEFAULT">
             </b-form-input>
           </b-input-group>
         </b-form-group>
@@ -34,7 +34,7 @@
                          title="Per page"
                          v-model="perPage"
                          :options="FILTER_VALUES"
-                         :size="SIZE">
+                         :size="SIZE.DEFAULT">
           </b-form-select>
         </b-form-group>
       </b-col>
@@ -42,12 +42,11 @@
       <b-col sm="1"
              md="1"
              lg="1">
-        <b-button variant="success"
-                  alt="Add new todo"
-                  title="Add new todo"
+        <b-button :variant="addNew ? 'danger': 'success'"
+                  :title="addNew ? CONTENT.DEFAULT.TITLE.CLOSE : CONTENT.DEFAULT.TITLE.ADD"
                   @click="addNew = !addNew"
-                  :size="SIZE">
-          <i class="fas fa-plus add"></i>
+                  :size="SIZE.DEFAULT">
+          <i :class="[addNew ? 'fas fa-times no-bg': 'fas fa-plus no-bg'] "></i>
         </b-button>
       </b-col>
     </b-row>
@@ -61,7 +60,7 @@
         <b-table bordered
                  dark
                  hover
-                 responsive="sm"
+                 :responsive="SIZE.SM"
                  :sticky-header="true"
                  :no-border-collapse="true"
                  :busy="isBusy"
@@ -90,45 +89,60 @@
 
           <template slot="action"
                     slot-scope="row">
-
-            <i title="View"
+            <i :title="row.detailsShowing ? CONTENT.DEFAULT.TITLE.CLOSE : CONTENT.DEFAULT.TITLE.SHOW"
                class="view-todo"
-               :class="[row.detailsShowing ? 'fas fa-eye-slash': 'far fa-eye']"
+               :class="[row.detailsShowing ? 'fas fa-eye-slash close-details': 'far fa-eye view-details']"
                @click="row.toggleDetails"></i>
-
-            <i title="Edit"
-               class="far fa-edit edit-todo"></i>
-
-            <i title="Delete"
-               class="fas fa-trash-alt delete-todo"
-               @click="showConfirmationModal(row.item.id)"></i>
 
           </template>
 
           <template v-slot:row-details="row">
-            <!-- <b-card bg-variant="light"
-                    text-variant="white"
-                    no-body> -->
-              <b-tabs active-nav-item-class="text-success"
-                      fill>
-                <b-tab title="Details"
-                       active>
+            <b-tabs active-nav-item-class="tab-active"
+                    align="center">
+              <b-tab :title="CONTENT.DEFAULT.TABS.DETAILS"
+                     class="mt-3"
+                     active>
+                <div class="todo-details mt-3">
                   <h1>{{row.item.title}}</h1>
                   <p>{{row.item.description}}</p>
                   <p>Priority: {{getPriority(row.item.priority)}}</p>
                   <p>Status: {{row.item.status ? CONTENT.DEFAULT.STATUS.COMPLETE: CONTENT.DEFAULT.STATUS.INCOMPLETE}}</p>
-                </b-tab>
-                <b-tab title="Edit">
-                  <p>Edit tab</p>
+                </div>
+              </b-tab>
+              <b-tab :title="CONTENT.DEFAULT.TABS.EDIT"
+                     class="mt-3">
+                <div class="todo-details mt-3">
                   <TodoForm :todo="row.item"
                             :add-new="false" />
+                </div>
 
-                  <!-- Load TodoForm -->
-                </b-tab>
-                <b-tab title="Delete">
-                  <p>I'm the tab with the very, very long title</p>
-                </b-tab>
-              </b-tabs>
+                <!-- Load TodoForm -->
+              </b-tab>
+              <b-tab :title="CONTENT.DEFAULT.TABS.DELETE"
+                     class="mt-3">
+                <div class="todo-details mt-3">
+                  <div class="mb-3">
+                    <h3>{{CONTENT.TODO.DELETE_CONFIRMATION}}</h3>
+                  </div>
+
+                  <div class="confirm mb-3 mt-3">
+                    <b-button variant="success"
+                              :size="SIZE.SM"
+                              class="mr-3">
+                      <i class="fa fa-thumbs-up"
+                         aria-hidden="true"></i> {{CONTENT.BUTTON.YES}}
+                    </b-button>
+
+                    <b-button variant="danger"
+                              :size="SIZE.SM">
+                      <i class="fa fa-times"
+                         aria-hidden="true"></i> {{CONTENT.BUTTON.NO}}
+                    </b-button>
+
+                  </div>
+                </div>
+              </b-tab>
+            </b-tabs>
             <!-- </b-card> -->
           </template>
 
@@ -144,7 +158,7 @@
                       :total-rows="ALL_TODOS.length"
                       :per-page="perPage"
                       align="fill"
-                      size="md"
+                      :size="SIZE.MD"
                       class="my-0"></b-pagination>
       </b-col>
 
@@ -195,7 +209,7 @@
     computed: mapGetters({ ALL_TODOS, SELECTED_FILTER, FILTER_VALUES })
   })
   export default class TodosComponent extends Vue {
-    private SIZE = SIZE.DEFAULT;
+    private SIZE = SIZE;
     private CONTENT = CONTENT;
     private TABLE_FIELDS = TABLE_FIELDS;
     private perPage: number = this.$store.getters[SELECTED_FILTER];

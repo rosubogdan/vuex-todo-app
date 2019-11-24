@@ -18,7 +18,7 @@
                        type="text"
                        v-model="form.title"
                        :placeholder="CONTENT.INPUT.TITLE_PLACEHOLDER"
-                       :size="SIZE">
+                       :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
               <div class="errors text-left mb-3"
@@ -37,7 +37,7 @@
                                type="text"
                                v-model="form.description"
                                :placeholder="CONTENT.INPUT.DESCRIPTION_PLACEHOLDER"
-                               :size="SIZE">
+                               :size="SIZE.DEFAULT">
               </b-form-textarea>
               <!-- Validation -->
               <div class="errors text-left mb-3"
@@ -53,10 +53,10 @@
             <section class="priority mb-3">
               <b-form-select id="priority"
                              v-model="form.priority"
-                             :size="SIZE">
+                             :size="SIZE.DEFAULT">
                 <template v-slot:first>
-                  <option value="" disabled
-                          >
+                  <option value=""
+                          disabled>
                     {{CONTENT.INPUT.PRIORITY_PLACEHOLDER}}
                   </option>
                 </template>
@@ -81,7 +81,7 @@
             <section class="status mb-3">
               <b-form-select id="status"
                              v-model="form.status"
-                             :size="SIZE">
+                             :size="SIZE.DEFAULT">
                 <template v-slot:first>
                   <option :value="null"
                           disabled>
@@ -105,6 +105,7 @@
             <!-- Submit ADD-->
             <b-button variant="success"
                       type="submit">
+              <i :class="[addNew ? 'fas fa-check no-bg' : 'fas fa-save no-bg']"></i>
               {{addNew ? CONTENT.BUTTON.ADD : CONTENT.BUTTON.SAVE}}
             </b-button>
           </b-form>
@@ -139,7 +140,7 @@
     @Prop() addNew: boolean;
     @Prop() todo: any;
 
-    private SIZE = SIZE.DEFAULT;
+    private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 

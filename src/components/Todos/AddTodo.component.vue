@@ -9,7 +9,7 @@
   import { Component, Prop, Vue } from "vue-property-decorator";
   import { mapGetters } from "vuex";
 
-  import { CONTENT, SIZE } from "@/constants";
+  import { CONTENT } from "@/constants";
 
   import { ADD_TODO_ACTION } from "@/store/modules/todos/actions";
 
@@ -24,7 +24,6 @@
     @Prop() addNew: boolean;
     @Prop() todo: any;
 
-    private SIZE = SIZE.DEFAULT;
     private CONTENT = CONTENT;
 
     private form: AddTodoFrom = <AddTodoFrom>{};
