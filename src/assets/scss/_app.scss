@@ -13,6 +13,9 @@ body {
   text-align: center;
   color: $white;
 
+  .no-bg {
+    background-color: transparent;
+  }
   // @overrides
   .btn-success {
     color: $white;
@@ -101,33 +104,54 @@ body {
       vertical-align: middle;
     }
   }
-  .view-todo,
-  .edit-todo,
-  .delete-todo {
+  .view-details,
+  .close-details {
     font-size: 20px;
     padding: 0.4rem;
     cursor: pointer;
   }
 
-  .view-todo {
+  .view-details {
     color: $green;
   }
 
-  .edit-todo {
-    color: $yellow;
-  }
-
-  .delete-todo {
+  .close-details {
     color: $red;
   }
-  // forms
-
-  // .form-control, .custom-select {
-  //   background-color: $dark;
-  //   color: $white;
-  // }
 
   .show-password {
     background-color: transparent;
+  }
+
+  // tabs
+  .nav-tabs {
+    border-bottom: 1px solid $green;
+  }
+
+  .tab-active {
+    color: $active-route;
+  }
+
+  .nav-tabs .nav-link {
+    border-bottom: 1px solid $green;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: $white;
+    a {
+      color: $white;
+    }
+  }
+  .nav-tabs .nav-link.active {
+    color: $active-route;
+    background-color: transparent;
+    border: 1px solid $green;
+    border-color: $green;
+    border-bottom: none;
+  }
+
+  .confirm {
+    i {
+      background-color: transparent;
+    }
   }
 }

@@ -7,10 +7,10 @@
              class="padding-15">
         <div class="card-wrapper">
           <i class="far fa-check-circle"></i>
-          <h3>{{CONTENT.TODO.TITLE}}</h3>
+          <h3>{{CONTENT.HOME.TODO_CARD.TITLE}}</h3>
           <router-link :to="CONTENT_ROUTES.TODOS.path">
             <b-button variant="success">
-              {{CONTENT.BUTTON}}
+              {{CONTENT.BUTTON.GO}}
             </b-button>
           </router-link>
         </div>
@@ -21,10 +21,10 @@
              class="padding-15">
         <div class="card-wrapper">
           <i class="fas fa-cart-arrow-down"></i>
-          <h3>{{CONTENT.BUY.TITLE}}</h3>
+          <h3>{{CONTENT.HOME.BUY_CARD.TITLE}}</h3>
           <router-link :to="CONTENT_ROUTES.BUY.path">
             <b-button variant="success">
-              {{CONTENT.BUTTON}}
+              {{CONTENT.BUTTON.GO}}
             </b-button>
           </router-link>
         </div>
@@ -34,7 +34,7 @@
     <b-row class="text-center mt-3">
       <b-col sm="12"
              class="copy">
-        <p>{{CONTENT.COPY}}</p>
+        <p>{{CONTENT.HOME.COPY}}</p>
       </b-col>
     </b-row>
   </div>
@@ -46,7 +46,7 @@
 
   @Component({})
   export default class HomeComponent extends Vue {
-    private CONTENT = CONTENT.HOME;
+    private CONTENT = CONTENT;
     private CONTENT_ROUTES = CONTENT_ROUTES;
     constructor() {
       super();

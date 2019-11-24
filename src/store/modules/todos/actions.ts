@@ -35,11 +35,10 @@ export const actions = {
 
   },
 
-  ADD_TODO_ACTION: async ({ commit }: any, title: string) => {
-    const todo: Todo = { title, completed: false };
+  ADD_TODO_ACTION: async ({ commit }: any, todo: Todo) => {
     try {
       const response = await addNewTodo(todo);
-      commit(ADD_TODO_MUTATION, response);
+      commit(ADD_TODO_MUTATION, response.data);
     } catch (error) {
       console.error(error);
     }

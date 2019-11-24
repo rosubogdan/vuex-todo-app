@@ -27,7 +27,7 @@ export const actions = {
 
   LOGIN_ACTION: async ({ commit }: any, user: User) => {
     try {
-      const response = await LOGIN(user);
+      const response: any = await LOGIN(user);
       const userInfo: User = new User(response.user.uid, response.user.email, response.user.displayName);
       commit(LOGIN_MUTATION, { user: userInfo, status: true });
     } catch (error) {

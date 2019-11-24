@@ -4,7 +4,7 @@ import Todo from '@/models/todo/todo';
 import { API_URL } from '@/constants';
 
 export const getTodo = async () => {
-  return await axios.get(`${API_URL}`);
+  return await axios.get(`${API_URL}?_sort=id&_order=desc`);
 
 };
 

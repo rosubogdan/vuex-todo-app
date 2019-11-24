@@ -1,6 +1,6 @@
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
-export const RegisterValidation = {
+export const RegisterFormValidation = {
   form: {
     email: {
       email,

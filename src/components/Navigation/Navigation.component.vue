@@ -5,7 +5,7 @@
               variant="dark"
               fixed="top">
       <b-navbar-brand class="logo"
-                      :title="CONTENT.APP_TITLE">
+                      :title="CONTENT.APP.TITLE">
         <router-link :to="CONTENT_ROUTES.HOME.path">
           <i class="far fa-check-circle"></i>
         </router-link>
@@ -65,10 +65,10 @@
     computed: mapGetters({ LOGIN_STATUS })
   })
   export default class NavigationComponent extends Vue {
+    private CONTENT = CONTENT;
     private LOGGED_IN_ROUTES = LOGGED_IN_ROUTES;
     private LOGGED_OUT_ROUTES = LOGGED_OUT_ROUTES;
     private CONTENT_ROUTES = CONTENT_ROUTES;
-    private CONTENT = CONTENT;
 
     constructor() {
       super();

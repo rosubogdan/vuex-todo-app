@@ -12,6 +12,8 @@ import {
   LOGOUT,
 } from './firebase.service';
 
+import { getPriority, getStatus } from './todo.service';
+
 
 export {
   REGISTER,
@@ -22,4 +24,6 @@ export {
   addNewTodo,
   updateTodo,
   deleteTodo,
+  getPriority,
+  getStatus
 };

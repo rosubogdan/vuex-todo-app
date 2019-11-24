@@ -3,4 +3,5 @@ export interface AddTodoFrom {
   description?: string;
   priority: number;
   status: boolean;
+  completed: boolean;
 }
