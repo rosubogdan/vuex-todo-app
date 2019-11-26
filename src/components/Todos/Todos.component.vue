@@ -52,14 +52,17 @@
     </b-row>
 
     <!-- ADD NEW TODO -->
-    <AddTodoComponent :add-new="addNew" />
-
+    <TodoForm v-if="addNew"
+              :add-new="addNew"
+              :handle-cancel="handleCancel"
+              :handle-save="handleSave" />
     <!-- TABLE -->
     <b-row class="mb-3">
       <b-col lg="12">
         <b-table bordered
                  dark
                  hover
+                 ref="todoTable"
                  :responsive="SIZE.SM"
                  :sticky-header="true"
                  :no-border-collapse="true"
@@ -92,8 +95,8 @@
             <i :title="row.detailsShowing ? CONTENT.DEFAULT.TITLE.CLOSE : CONTENT.DEFAULT.TITLE.SHOW"
                class="view-todo"
                :class="[row.detailsShowing ? 'fas fa-eye-slash close-details': 'far fa-eye view-details']"
-               @click="row.toggleDetails"></i>
-
+               @click="row.toggleDetails">
+            </i>
           </template>
 
           <template v-slot:row-details="row">
@@ -112,11 +115,13 @@
               <b-tab :title="CONTENT.DEFAULT.TABS.EDIT"
                      class="mt-3">
                 <div class="todo-details mt-3">
+                  <!-- Load TodoForm -->
                   <TodoForm :todo="row.item"
-                            :add-new="false" />
+                            :add-new="false"
+                            :handle-save="handleUpdate"
+                            :handle-cancel="handleCancelEdit" />
                 </div>
 
-                <!-- Load TodoForm -->
               </b-tab>
               <b-tab :title="CONTENT.DEFAULT.TABS.DELETE"
                      class="mt-3">
@@ -134,7 +139,8 @@
                     </b-button>
 
                     <b-button variant="danger"
-                              :size="SIZE.SM">
+                              :size="SIZE.SM"
+                              @click="handleRowToggle(row.item)">
                       <i class="fa fa-times"
                          aria-hidden="true"></i> {{CONTENT.BUTTON.NO}}
                     </b-button>
@@ -154,21 +160,14 @@
              md="12"
              class="my-1">
         <b-pagination id="todosPagination"
+                      class="my-0"
+                      align="fill"
                       v-model="currentPage"
                       :total-rows="ALL_TODOS.length"
                       :per-page="perPage"
-                      align="fill"
-                      :size="SIZE.MD"
-                      class="my-0"></b-pagination>
+                      :size="SIZE.MD">
+        </b-pagination>
       </b-col>
-
-      <!-- Info modal -->
-      <b-modal id="deleteConfirmation"
-               :title="CONTENT.MODAL_TITLE"
-               @hidden="resetModal"
-               @ok="handleOk">
-        <p class="my-4">{{CONTENT.DELETE_CONFIRMATION}}</p>
-      </b-modal>
 
     </b-row>
 
@@ -179,10 +178,12 @@
   import { mapGetters } from "vuex";
   import { Component, Vue } from "vue-property-decorator";
 
-  import AddTodoComponent from "@/components/Todos/AddTodo.component.vue";
-  import TodoForm from "@/components/Todos/TodoForm.component.vue";
+  import { validationMixin } from "vuelidate";
+  // import { AddTodoValidation } from "@/validations/addTodo.validation";
 
-  import { AddTodoFrom } from "@/models/forms/addTodoForm";
+  import { TodoFormValidation, VALIDATION } from "@/validations";
+
+  import TodoForm from "@/components/Todos/TodoForm.component.vue";
 
   import { CONTENT, SIZE, TABLE_FIELDS } from "@/constants";
   import {
@@ -192,9 +193,7 @@
   } from "@/store/modules/todos/getters";
 
   import {
-    FILTER_TODOS_ACTION,
     FETCH_TODOS_ACTION,
-    UPDATE_TODO_ACTION,
     DELETE_TODO_ACTION
   } from "@/store/modules/todos/actions";
 
@@ -205,13 +204,16 @@
   // import { db } from "@/main";
 
   @Component({
-    components: { AddTodoComponent, TodoForm },
+    components: { TodoForm },
+    mixins: [validationMixin],
+    validations: TodoFormValidation,
     computed: mapGetters({ ALL_TODOS, SELECTED_FILTER, FILTER_VALUES })
   })
   export default class TodosComponent extends Vue {
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private TABLE_FIELDS = TABLE_FIELDS;
+
     private perPage: number = this.$store.getters[SELECTED_FILTER];
     private searchTerm = null;
     private deleteItemId: any = null;
@@ -222,6 +224,8 @@
     private addNew: boolean = false;
 
     private getPriority = getPriority;
+
+    private selectedItem: any = null;
 
     constructor() {
       super();
@@ -236,23 +240,29 @@
       }
     }
 
-    public toggleTodo(todo: Todo): void {
-      todo.completed = !todo.completed;
-      this.$store.dispatch(UPDATE_TODO_ACTION, todo);
+    private handleDelete(id: any) {
+      this.$store.dispatch(DELETE_TODO_ACTION, id);
     }
 
-    private handleOk() {
-      this.$store.dispatch(DELETE_TODO_ACTION, this.deleteItemId);
-      this.deleteItemId = null;
+    private handleRowToggle(rowItem: any) {
+      rowItem._showDetails = !rowItem._showDetails;
     }
 
-    private resetModal() {
-      this.deleteItemId = null;
+    private handleCancel(value: any) {
+      this.addNew = !value;
     }
 
-    private showConfirmationModal(id: number) {
-      this.deleteItemId = id;
-      this.$bvModal.show("deleteConfirmation");
+    private handleCancelEdit(value: any) {
+      console.log("cancel edit ", value);
+    }
+
+    private handleSave(payload: any) {
+      console.log("handle save ", payload);
+      this.$v.$touch();
+    }
+
+    private handleUpdate(payload: any) {
+      console.log("handle update ", payload);
     }
   }
 </script>

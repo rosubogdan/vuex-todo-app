@@ -17,7 +17,7 @@ export const mutations = {
   UPDATE_TODO_MUTATION: (state: State, todo: Todo) => {
     const index = state.todos.findIndex((item: Todo) => item.id === todo.id);
     if (index !== -1) {
-      state.todos.splice(index, 1, todo);
+      state.todos[index] = todo;
     }
   },
 

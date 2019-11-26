@@ -102,12 +102,30 @@
               </div>
             </section>
 
-            <!-- Submit ADD-->
-            <b-button variant="success"
-                      type="submit">
-              <i :class="[addNew ? 'fas fa-check no-bg' : 'fas fa-save no-bg']"></i>
-              {{addNew ? CONTENT.BUTTON.ADD : CONTENT.BUTTON.SAVE}}
-            </b-button>
+            <!-- Form buttons -->
+            <div class="todo-details mt-3">
+              <div class="confirm mb-3 mt-3">
+
+                <b-button variant="success"
+                          :size="SIZE.SM"
+                          class="mr-3"
+                          @click="handleSave(form)">
+                  <i class="fa fa-thumbs-up"
+                     aria-hidden="true">
+                  </i> {{CONTENT.BUTTON.SAVE}}
+                </b-button>
+
+                <b-button variant="danger"
+                          :size="SIZE.SM"
+                          @click="handleCancel(addNew)">
+                  <i class="fa fa-times"
+                     aria-hidden="true">
+                  </i> {{CONTENT.BUTTON.CANCEL}}
+                </b-button>
+
+              </div>
+            </div>
+
           </b-form>
         </div>
       </b-col>
@@ -119,13 +137,13 @@
   import { Component, Prop, Vue } from "vue-property-decorator";
   import { mapGetters } from "vuex";
   import { validationMixin } from "vuelidate";
-  import { AddTodoValidation } from "@/validations/addTodo.validation";
+  // import { AddTodoValidation } from "@/validations/addTodo.validation";
 
   import { TodoFormValidation, VALIDATION } from "@/validations";
 
   import { CONTENT, SIZE } from "@/constants";
   import { Priorities } from "@/models/todo/priorities";
-  import { AddTodoFrom } from "@/models/forms/addTodoForm";
+  import Todo from "@/models/todo/todo";
 
   import {
     ADD_TODO_ACTION,
@@ -140,15 +158,22 @@
     @Prop() addNew: boolean;
     @Prop() todo: any;
 
+    @Prop() handleCancel: any;
+    @Prop() handleSave: any;
+
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 
-    private form: AddTodoFrom = <AddTodoFrom>this.todo;
+    private form: Todo = <Todo>{ ...this.todo };
     public priorities = Priorities;
 
     constructor() {
       super();
+    }
+
+    private toggleForm() {
+      this.addNew = !this.addNew;
     }
 
     private async handleSubmit() {
@@ -157,11 +182,15 @@
         if (this.addNew) {
           await this.$store.dispatch(ADD_TODO_ACTION, this.form);
         } else {
-          let test = Object.assign(this.form);
-          test._showDetails = false;
-          await this.$store.dispatch(UPDATE_TODO_ACTION, test);
+          let res = await this.$store.dispatch(UPDATE_TODO_ACTION, this.form);
+          console.log("res ", this.form);
+          // this.form._showDetails = false;
         }
       }
+    }
+
+    private async beforeDestroy() {
+      delete this.form;
     }
   }
 </script>

@@ -47,7 +47,7 @@ export const actions = {
   UPDATE_TODO_ACTION: async ({ commit }: any, todo: Todo) => {
     try {
       const response = await updateTodo(todo);
-      commit(UPDATE_TODO_MUTATION, response);
+      commit(UPDATE_TODO_MUTATION, response.data);
     } catch (error) {
       console.error(error);
     }
