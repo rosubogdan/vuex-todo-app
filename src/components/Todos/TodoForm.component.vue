@@ -140,13 +140,13 @@
   export default class TodoForm extends Vue {
     @Prop() public addNew: boolean;
     @Prop() public todo: any;
+    public priorities = Priorities;
 
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 
     private form: AddTodoFrom = this.todo as AddTodoFrom;
-    public priorities = Priorities;
 
     constructor() {
       super();
@@ -158,7 +158,7 @@
         if (this.addNew) {
           await this.$store.dispatch(ADD_TODO_ACTION, this.form);
         } else {
-          let test = Object.assign(this.form);
+          const test = Object.assign(this.form);
           test._showDetails = false;
           await this.$store.dispatch(UPDATE_TODO_ACTION, test);
         }

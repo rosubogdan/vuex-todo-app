@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import Vue from 'vue';
 import Router from 'vue-router';
-import { ROUTES } from '@/constants';
+import { ROUTES } from './routes';
 
 Vue.use(Router);
 
