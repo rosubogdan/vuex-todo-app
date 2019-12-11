@@ -90,46 +90,47 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import { mapGetters } from "vuex";
-  import { validationMixin } from "vuelidate";
-  import { LoginFormValidation, VALIDATION } from "@/validations";
+import { Component, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+import { validationMixin } from 'vuelidate';
+import { LoginFormValidation, VALIDATION } from '@/validations';
 
-  import { CONTENT, CONTENT_ROUTES, SIZE } from "@/constants";
+import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
-  import { LOGIN_STATUS, LOGIN_MESSAGE } from "@/store/modules/auth/getters";
-  import { LOGIN_ACTION } from "@/store/modules/auth/actions";
+import { LOGIN_STATUS, LOGIN_MESSAGE } from '@/store/modules/auth/getters';
+import { LOGIN_ACTION } from '@/store/modules/auth/actions';
 
-  import { LoginForm } from "@/models/forms/loginForm";
+import { LoginForm } from '@/models/forms/loginForm';
 
-  @Component({
-    mixins: [validationMixin],
-    validations: LoginFormValidation,
-    computed: mapGetters({ LOGIN_STATUS, LOGIN_MESSAGE })
-  })
-  export default class LoginComponent extends Vue {
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private VALIDATION = VALIDATION;
+@Component({
+  mixins: [validationMixin],
+  validations: LoginFormValidation,
+  computed: mapGetters({ LOGIN_STATUS, LOGIN_MESSAGE }),
+})
+export default class LoginComponent extends Vue {
+  private SIZE = SIZE;
+  private CONTENT = CONTENT;
+  private VALIDATION = VALIDATION;
 
-    private form: LoginForm = <LoginForm>{};
-    private loginError = null;
-    private show: boolean = false;
+  private form: LoginForm = <LoginForm>{};
+  private loginError = null;
+  private show: boolean = false;
 
-    private toggleShowHide() {
-      this.show = !this.show;
-    }
+  private toggleShowHide() {
+    this.show = !this.show; 
+  }
 
-    private async handleSubmit() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        await this.$store.dispatch(LOGIN_ACTION, this.form);
-        this.loginError = this.$store.getters[LOGIN_MESSAGE];
-        if (this.$store.getters[LOGIN_STATUS])
-          this.$router.push({ path: CONTENT_ROUTES.HOME.path });
+  private async handleSubmit() {
+    this.$v.$touch(); 
+    if (!this.$v.$invalid) {
+      await this.$store.dispatch(LOGIN_ACTION, this.form); 
+      this.loginError = this.$store.getters[LOGIN_MESSAGE];
+      if (this.$store.getters[LOGIN_STATUS]) {
+        this.$router.push({ path: CONTENT_ROUTES.HOME.path }); 
       }
     }
   }
+}
 </script>
 
 

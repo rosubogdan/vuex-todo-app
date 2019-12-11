@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve -p 8080",
+    "serve": "vue-cli-service serve -p 8080 && db",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "db": "json-server db.json -w -p 8081"

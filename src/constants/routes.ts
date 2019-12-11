@@ -1,7 +1,7 @@
 export const ROUTES = [
   {
     path: '*',
-    redirect: '/login'
+    redirect: '/login',
   },
   {
     path: '/login',
@@ -18,20 +18,20 @@ export const ROUTES = [
   {
     path: '/',
     name: 'Home',
-    icon:'fas fa-home',
+    icon: 'fas fa-home',
     component: () => import('@/views/Home.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/todos',
     name: 'Todos',
-    icon:'far fa-check-circle',
+    icon: 'far fa-check-circle',
     component: () => import('@/views/Todos.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
 
   {
@@ -40,8 +40,8 @@ export const ROUTES = [
     icon: 'fas fa-cart-arrow-down',
     component: () => import('@/views/Buy.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
 ];
 
@@ -71,13 +71,13 @@ export const CONTENT_ROUTES = {
   BUY: {
     path: '/buy',
     name: 'Buy list',
-  }
-}
+  },
+};
 
 export const LOGGED_IN_ROUTES = ROUTES.filter(
-  route => route.path !== CONTENT_ROUTES.LOGIN.path && route.path !== CONTENT_ROUTES.REGISTER.path && route.path !== '*'
+  (route) => route.path !== CONTENT_ROUTES.LOGIN.path && route.path !== CONTENT_ROUTES.REGISTER.path && route.path !== '*',
 );
 
 export const LOGGED_OUT_ROUTES = ROUTES.filter(
-  route => route.path === CONTENT_ROUTES.LOGIN.path || route.path === CONTENT_ROUTES.REGISTER.path
+  (route) => route.path === CONTENT_ROUTES.LOGIN.path || route.path === CONTENT_ROUTES.REGISTER.path,
 );

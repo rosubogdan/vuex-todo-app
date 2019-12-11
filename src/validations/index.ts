@@ -8,5 +8,5 @@ export {
   RegisterFormValidation,
   LoginFormValidation,
   TodoFormValidation,
-  VALIDATION
-}
+  VALIDATION,
+};

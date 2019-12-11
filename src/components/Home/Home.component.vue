@@ -41,17 +41,17 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import { CONTENT, CONTENT_ROUTES } from "@/constants";
+import { Component, Vue } from 'vue-property-decorator';
+import { CONTENT, CONTENT_ROUTES } from '@/constants';
 
-  @Component({})
-  export default class HomeComponent extends Vue {
-    private CONTENT = CONTENT;
-    private CONTENT_ROUTES = CONTENT_ROUTES;
-    constructor() {
-      super();
-    }
+@Component({})
+export default class HomeComponent extends Vue {
+  private CONTENT = CONTENT;
+  private CONTENT_ROUTES = CONTENT_ROUTES;
+  constructor() {
+    super();
   }
+}
 </script>
 
 <style lang="scss" scoped>

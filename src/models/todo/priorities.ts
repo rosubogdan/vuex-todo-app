@@ -1,7 +1,7 @@
 interface Priority {
   name: string;
   value: number;
-};
+}
 
 export const Priorities: Priority[] = new Array<Priority>(
   { name: 'Low', value: 0 },

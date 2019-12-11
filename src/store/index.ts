@@ -13,7 +13,7 @@ Vue.use(Vuex);
 // Create store
 export default new Vuex.Store({
   plugins: [createPersistedState({
-    paths: [`${STORE_AUTH_MODULE}.isLoggedIn`, `${STORE_AUTH_MODULE}.user`]
+    paths: [`${STORE_AUTH_MODULE}.isLoggedIn`, `${STORE_AUTH_MODULE}.user`],
   })],
   modules: {
     TODOS,

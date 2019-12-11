@@ -132,49 +132,50 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import { mapGetters } from "vuex";
-  import { validationMixin } from "vuelidate";
-  import { RegisterFormValidation, VALIDATION } from "@/validations";
-  import { CONTENT, CONTENT_ROUTES, SIZE } from "@/constants";
+import { Component, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+import { validationMixin } from 'vuelidate';
+import { RegisterFormValidation, VALIDATION } from '@/validations';
+import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
-  import {
-    REGISTER_STATUS,
-    REGISTER_MESSAGE
-  } from "@/store/modules/auth/getters";
-  import { REGISTER_ACTION } from "@/store/modules/auth/actions";
-  import { RegisterForm } from "@/models/forms/registerForm";
+import {
+  REGISTER_STATUS,
+  REGISTER_MESSAGE,
+} from '@/store/modules/auth/getters';
+import { REGISTER_ACTION } from '@/store/modules/auth/actions';
+import { RegisterForm } from '@/models/forms/registerForm';
 
-  @Component({
-    mixins: [validationMixin],
-    validations: RegisterFormValidation,
-    computed: mapGetters({ REGISTER_STATUS, REGISTER_MESSAGE })
-  })
-  export default class RegisterComponent extends Vue {
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private VALIDATION = VALIDATION;
+@Component({
+  mixins: [validationMixin],
+  validations: RegisterFormValidation,
+  computed: mapGetters({ REGISTER_STATUS, REGISTER_MESSAGE }),
+})
+export default class RegisterComponent extends Vue {
+  private SIZE = SIZE;
+  private CONTENT = CONTENT;
+  private VALIDATION = VALIDATION;
 
-    private form: RegisterForm = <RegisterForm>{};
+  private form: RegisterForm = <RegisterForm>{};
 
-    private registerError = null;
-    private showPassword: boolean = false;
-    private showConfirmPassword: boolean = false;
+  private registerError = null;
+  private showPassword: boolean = false;
+  private showConfirmPassword: boolean = false;
 
-    constructor() {
-      super();
-    }
+  constructor() {
+    super(); 
+  }
 
-    private async handleSubmit() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        await this.$store.dispatch(REGISTER_ACTION, this.form);
-        this.registerError = this.$store.getters[REGISTER_MESSAGE];
-        if (this.$store.getters[REGISTER_STATUS])
-          this.$router.push({ path: CONTENT_ROUTES.LOGIN.path });
+  private async handleSubmit() {
+    this.$v.$touch(); 
+    if (!this.$v.$invalid) {
+      await this.$store.dispatch(REGISTER_ACTION, this.form); 
+      this.registerError = this.$store.getters[REGISTER_MESSAGE];
+      if (this.$store.getters[REGISTER_STATUS]) {
+        this.$router.push({ path: CONTENT_ROUTES.LOGIN.path }); 
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

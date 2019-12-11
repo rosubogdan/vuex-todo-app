@@ -1,13 +1,13 @@
-import { required, email } from "vuelidate/lib/validators";
+import { required, email } from 'vuelidate/lib/validators';
 
 export const LoginFormValidation = {
   form: {
     email: {
       email,
-      required
+      required,
     },
     password: {
-      required
-    }
-  }
+      required,
+    },
+  },
 };

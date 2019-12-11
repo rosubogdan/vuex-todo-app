@@ -6,7 +6,7 @@ import {
   getFiltered,
   addNewTodo,
   updateTodo,
-  deleteTodo
+  deleteTodo,
 } from '@/services/api.service';
 
 import {

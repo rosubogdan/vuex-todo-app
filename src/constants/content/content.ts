@@ -5,19 +5,19 @@ export const DEFAULT = {
   },
   TYPE: {
     TEXT: 'text',
-    PASSWORD: 'password'
+    PASSWORD: 'password',
   },
   LOADING: 'Loading ...',
   TABS: {
     DETAILS: 'Info',
     EDIT: 'Edit',
-    DELETE: 'Delete'
+    DELETE: 'Delete',
   },
   TITLE: {
     ADD: 'Add',
     SHOW: 'Show',
-    CLOSE: 'Close'
-  }
+    CLOSE: 'Close',
+  },
 };
 
 export const APP = {
@@ -29,7 +29,7 @@ export const REGISTER = {
 };
 
 export const LOGIN = {
-  HEADER: 'Login'
+  HEADER: 'Login',
 };
 
 export const HOME = {
@@ -39,13 +39,13 @@ export const HOME = {
   BUY_CARD: {
     TITLE: 'Buy List',
   },
-  COPY: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, eum architecto magni quam eligendi pariatur, amet repudiandae nostrum ipsam, cupiditate rem? Quo sunt, eveniet aut distinctio iure odit doloribus tempore numquam ut nihil consequuntur et culpa quam veniam repellendus? Ipsum accusantium, animi deleniti temporibus, ab totam eius molestias sapiente aliquid quo magnam sunt autem illum ipsa. Et excepturi cupiditate animi.'
+  COPY: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, eum architecto magni quam eligendi pariatur, amet repudiandae nostrum ipsam, cupiditate rem? Quo sunt, eveniet aut distinctio iure odit doloribus tempore numquam ut nihil consequuntur et culpa quam veniam repellendus? Ipsum accusantium, animi deleniti temporibus, ab totam eius molestias sapiente aliquid quo magnam sunt autem illum ipsa. Et excepturi cupiditate animi.',
 };
 
 export const TODO = {
   HEADER: 'Todos',
   FILTER_TODOS: 'Per page:',
-  DELETE_CONFIRMATION: 'Are you sure you want to delete this item?'
+  DELETE_CONFIRMATION: 'Are you sure you want to delete this item?',
 };
 
 export const BUY = {};
@@ -84,7 +84,7 @@ export const BUTTON = {
   SAVE: 'Save',
   YES: 'Yes',
   NO: 'No',
-  CANCEL: 'Cancel'
+  CANCEL: 'Cancel',
 };
 
 export const CONTENT = {
@@ -96,7 +96,7 @@ export const CONTENT = {
   TODO,
   BUY,
   INPUT,
-  BUTTON
+  BUTTON,
 };
 
 

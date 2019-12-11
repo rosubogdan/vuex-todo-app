@@ -154,12 +154,13 @@
              md="12"
              class="my-1">
         <b-pagination id="todosPagination"
+                      align="fill"
+                      class="my-0"
                       v-model="currentPage"
                       :total-rows="ALL_TODOS.length"
                       :per-page="perPage"
-                      align="fill"
-                      :size="SIZE.MD"
-                      class="my-0"></b-pagination>
+                      :size="SIZE.MD">
+        </b-pagination>
       </b-col>
 
       <!-- Info modal -->

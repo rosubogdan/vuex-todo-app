@@ -11,7 +11,7 @@ export const mutations = {
   GET_TODOS_MUTATION: (state: State, todos: Todo[]) => (state.todos = todos),
 
   ADD_TODO_MUTATION: (state: State, todo: Todo) => {
-    state.todos.unshift(todo)
+    state.todos.unshift(todo);
   },
 
   UPDATE_TODO_MUTATION: (state: State, todo: Todo) => {

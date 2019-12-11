@@ -9,7 +9,7 @@ export const mutations = {
 
   REGISTER_MUTATION: (state: State, { status, message }: { status: boolean, message?: string }) => {
     state.registerStatus = status;
-    state.registerMessage = message
+    state.registerMessage = message;
   },
 
   LOGIN_MUTATION: (state: State, { user, status, message }: { user: User, status: boolean, message?: string }) => {
@@ -22,6 +22,6 @@ export const mutations = {
   LOGOUT_MUTATION: (state: State, user: User) => {
     state.user = user;
     state.isLoggedIn = false;
-  }
+  },
 
 };

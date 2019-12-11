@@ -6,5 +6,5 @@ export const SIZE = {
   SM,
   MD,
   LG,
-  DEFAULT: LG
-}
+  DEFAULT: LG,
+};

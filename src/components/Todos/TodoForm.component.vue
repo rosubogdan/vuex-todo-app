@@ -116,29 +116,29 @@
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from "vue-property-decorator";
-  import { mapGetters } from "vuex";
-  import { validationMixin } from "vuelidate";
-  import { AddTodoValidation } from "@/validations/addTodo.validation";
+  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { mapGetters } from 'vuex';
+  import { validationMixin } from 'vuelidate';
+  import { AddTodoValidation } from '@/validations/addTodo.validation';
 
-  import { TodoFormValidation, VALIDATION } from "@/validations";
+  import { TodoFormValidation, VALIDATION } from '@/validations';
 
-  import { CONTENT, SIZE } from "@/constants";
-  import { Priorities } from "@/models/todo/priorities";
-  import { AddTodoFrom } from "@/models/forms/addTodoForm";
+  import { CONTENT, SIZE } from '@/constants';
+  import { Priorities } from '@/models/todo/priorities';
+  import { AddTodoFrom } from '@/models/forms/addTodoForm';
 
   import {
     ADD_TODO_ACTION,
     UPDATE_TODO_ACTION
-  } from "@/store/modules/todos/actions";
+  } from '@/store/modules/todos/actions';
 
   @Component({
     mixins: [validationMixin],
     validations: TodoFormValidation
   })
   export default class TodoForm extends Vue {
-    @Prop() addNew: boolean;
-    @Prop() todo: any;
+    @Prop() public addNew: boolean;
+    @Prop() public todo: any;
 
     private SIZE = SIZE;
     private CONTENT = CONTENT;

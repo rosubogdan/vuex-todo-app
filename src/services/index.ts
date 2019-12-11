@@ -25,5 +25,5 @@ export {
   updateTodo,
   deleteTodo,
   getPriority,
-  getStatus
+  getStatus,
 };

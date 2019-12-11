@@ -50,36 +50,36 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import { mapGetters } from "vuex";
-  import { LOGOUT_ACTION } from "@/store/modules/auth/actions";
-  import { LOGIN_STATUS } from "@/store/modules/auth/getters";
-  import {
-    LOGGED_IN_ROUTES,
-    LOGGED_OUT_ROUTES,
-    CONTENT_ROUTES,
-    CONTENT
-  } from "@/constants";
+import { Component, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+import { LOGOUT_ACTION } from '@/store/modules/auth/actions';
+import { LOGIN_STATUS } from '@/store/modules/auth/getters';
+import {
+  LOGGED_IN_ROUTES,
+  LOGGED_OUT_ROUTES,
+  CONTENT_ROUTES,
+  CONTENT,
+} from '@/constants';
 
-  @Component({
-    computed: mapGetters({ LOGIN_STATUS })
-  })
-  export default class NavigationComponent extends Vue {
-    private CONTENT = CONTENT;
-    private LOGGED_IN_ROUTES = LOGGED_IN_ROUTES;
-    private LOGGED_OUT_ROUTES = LOGGED_OUT_ROUTES;
-    private CONTENT_ROUTES = CONTENT_ROUTES;
+@Component({
+  computed: mapGetters({ LOGIN_STATUS }),
+})
+export default class NavigationComponent extends Vue {
+  private CONTENT = CONTENT;
+  private LOGGED_IN_ROUTES = LOGGED_IN_ROUTES;
+  private LOGGED_OUT_ROUTES = LOGGED_OUT_ROUTES;
+  private CONTENT_ROUTES = CONTENT_ROUTES;
 
-    constructor() {
-      super();
-    }
-
-    private async Logout(e: any) {
-      e.preventDefault();
-      await this.$store.dispatch(LOGOUT_ACTION);
-      this.$router.push({ path: CONTENT_ROUTES.LOGIN.path });
-    }
+  constructor() {
+    super();
   }
+
+  private async Logout(e: any) {
+    e.preventDefault();
+    await this.$store.dispatch(LOGOUT_ACTION);
+    this.$router.push({ path: CONTENT_ROUTES.LOGIN.path });
+  }
+}
 </script>
 
 <style scoped lang="scss">
