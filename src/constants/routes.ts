@@ -45,8 +45,6 @@ export const ROUTES = [
   },
 ];
 
-
-
 export const CONTENT_ROUTES = {
   REGISTER: {
     path: '/register',

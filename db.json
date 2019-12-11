@@ -80,8 +80,9 @@
       "title": "todo 9",
       "completed": false,
       "description": " Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit maxime impedit dolores. Et, magni. Accusamus non dicta est, corporis assumenda porro blanditiis voluptatum. Natus voluptatibus distinctio reprehenderit accusamus quibusdam consequatur.",
-      "priority": 0,
-      "status": false
+      "priority": 1,
+      "status": false,
+      "_showDetails": false
     },
     {
       "userId": 1,
@@ -92,6 +93,20 @@
       "priority": 1,
       "status": false,
       "_showDetails": false
+    },
+    {
+      "title": "test",
+      "description": "sdasd",
+      "priority": 0,
+      "status": false,
+      "id": 11
+    },
+    {
+      "title": "test",
+      "description": "sdasd",
+      "priority": 0,
+      "status": false,
+      "id": 12
     }
   ]
 }

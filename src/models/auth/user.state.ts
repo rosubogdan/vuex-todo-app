@@ -3,10 +3,9 @@ import User from '@/models/auth/user';
 interface State {
   user: User;
   isLoggedIn: boolean;
-  registerStatus: boolean | null;
-  registerMessage?: string;
-  loginStatus: boolean | null;
-  loginMessage?: string;
+  isLoading: boolean;
+  hasError: boolean;
+  errorMessage: string;
 }
 
 export default State;

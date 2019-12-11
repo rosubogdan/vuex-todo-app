@@ -3,15 +3,15 @@ import { STORE_AUTH_MODULE } from '@/constants/';
 
 export const USER = `${STORE_AUTH_MODULE}/USER`;
 export const LOGIN_STATUS = `${STORE_AUTH_MODULE}/LOGIN_STATUS`;
-export const REGISTER_STATUS = `${STORE_AUTH_MODULE}/REGISTER_STATUS`;
-export const REGISTER_MESSAGE = `${STORE_AUTH_MODULE}/REGISTER_MESSAGE`;
-export const LOGIN_MESSAGE = `${STORE_AUTH_MODULE}/LOGIN_MESSAGE`;
+export const IS_LOADING = `${STORE_AUTH_MODULE}/IS_LOADING`;
+export const HAS_ERROR = `${STORE_AUTH_MODULE}/HAS_ERROR`;
+export const ERROR_MESSAGE = `${STORE_AUTH_MODULE}/ERROR_MESSAGE`;
 
 
 export const getters = {
   USER: (state: State) => state.user,
-  REGISTER_STATUS: (state: State) => state.registerStatus,
-  REGISTER_MESSAGE: (state: State) => state.registerMessage,
   LOGIN_STATUS: (state: State) => state.isLoggedIn,
-  LOGIN_MESSAGE: (state: State) => state.loginMessage,
+  IS_LOADING: (state: State) => state.isLoading,
+  HAS_ERROR: (state: State) => state.hasError,
+  ERROR_MESSAGE: (state: State) => state.errorMessage,
 };

@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+
+    <Loader :is-loading="IS_LOADING" />
+
     <b-row class="text-center mb-3">
       <b-col sm=12>
         <h3>
@@ -33,8 +36,9 @@
           <b-form-select id="perPageSelect"
                          title="Per page"
                          v-model="perPage"
-                         :options="FILTER_VALUES"
-                         :size="SIZE.DEFAULT">
+                         :options="PER_PAGE_OPTIONS"
+                         :size="SIZE.DEFAULT"
+                         @change="changePerPage">
           </b-form-select>
         </b-form-group>
       </b-col>
@@ -63,7 +67,7 @@
                  :responsive="SIZE.SM"
                  :sticky-header="true"
                  :no-border-collapse="true"
-                 :busy="isBusy"
+                 :busy="IS_LOADING"
                  :items="ALL_TODOS"
                  :fields="TABLE_FIELDS"
                  :per-page="perPage"
@@ -127,14 +131,14 @@
 
                   <div class="confirm mb-3 mt-3">
                     <b-button variant="success"
-                              :size="SIZE.SM"
+                              :size="SIZE.DEFAULT"
                               class="mr-3">
                       <i class="fa fa-thumbs-up"
                          aria-hidden="true"></i> {{CONTENT.BUTTON.YES}}
                     </b-button>
 
                     <b-button variant="danger"
-                              :size="SIZE.SM">
+                              :size="SIZE.DEFAULT">
                       <i class="fa fa-times"
                          aria-hidden="true"></i> {{CONTENT.BUTTON.NO}}
                     </b-button>
@@ -143,7 +147,6 @@
                 </div>
               </b-tab>
             </b-tabs>
-            <!-- </b-card> -->
           </template>
 
         </b-table>
@@ -159,7 +162,7 @@
                       v-model="currentPage"
                       :total-rows="ALL_TODOS.length"
                       :per-page="perPage"
-                      :size="SIZE.MD">
+                      :size="SIZE.DEFAULT">
         </b-pagination>
       </b-col>
 
@@ -177,49 +180,52 @@
 </template>
 
 <script lang="ts">
-  import { mapGetters } from "vuex";
-  import { Component, Vue } from "vue-property-decorator";
+  import { Component, Vue } from 'vue-property-decorator';
+  import { mapGetters } from 'vuex';
+  import Loader from '@/common/Loader.component.vue';
 
-  import AddTodoComponent from "@/components/Todos/AddTodo.component.vue";
-  import TodoForm from "@/components/Todos/TodoForm.component.vue";
 
-  import { AddTodoFrom } from "@/models/forms/addTodoForm";
+  import AddTodoComponent from '@/components/Todos/AddTodo.component.vue';
+  import TodoForm from '@/components/Todos/TodoForm.component.vue';
 
-  import { CONTENT, SIZE, TABLE_FIELDS } from "@/constants";
+  // import { AddTodoFrom } from '@/models/forms/addTodoForm';
+
+  import { CONTENT, SIZE, TABLE_FIELDS } from '@/constants';
+
   import {
     ALL_TODOS,
-    SELECTED_FILTER,
-    FILTER_VALUES
-  } from "@/store/modules/todos/getters";
+    PER_PAGE,
+    PER_PAGE_OPTIONS,
+    IS_LOADING,
+  } from '@/store/modules/todos/getters';
 
   import {
-    FILTER_TODOS_ACTION,
+    CHANGE_PER_PAGE_ACTION,
     FETCH_TODOS_ACTION,
     UPDATE_TODO_ACTION,
-    DELETE_TODO_ACTION
-  } from "@/store/modules/todos/actions";
+    DELETE_TODO_ACTION,
+  } from '@/store/modules/todos/actions';
 
-  import Todo from "@/models/todo/todo";
+  import Todo from '@/models/todo/todo';
 
-  import { getPriority } from "@/services";
+  import { getPriority } from '@/services';
 
-  // import { db } from "@/main";
+  // import { db } from '@/main';
 
   @Component({
-    components: { AddTodoComponent, TodoForm },
-    computed: mapGetters({ ALL_TODOS, SELECTED_FILTER, FILTER_VALUES })
+    components: { AddTodoComponent, TodoForm, Loader },
+    computed: mapGetters({ IS_LOADING, ALL_TODOS, PER_PAGE, PER_PAGE_OPTIONS }),
   })
   export default class TodosComponent extends Vue {
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private TABLE_FIELDS = TABLE_FIELDS;
-    private perPage: number = this.$store.getters[SELECTED_FILTER];
+    private perPage: number = this.$store.getters[PER_PAGE];
     private searchTerm = null;
     private deleteItemId: any = null;
     private totalRows: number = 1;
     private currentPage: number = 1;
 
-    private isBusy: boolean = true;
     private addNew: boolean = false;
 
     private getPriority = getPriority;
@@ -231,9 +237,6 @@
     public async created() {
       if (this.$store.getters[ALL_TODOS].length === 0) {
         await this.$store.dispatch(FETCH_TODOS_ACTION);
-        this.isBusy = false;
-      } else {
-        this.isBusy = false;
       }
     }
 
@@ -247,17 +250,16 @@
       this.deleteItemId = null;
     }
 
+    private changePerPage() {
+      this.$store.dispatch(CHANGE_PER_PAGE_ACTION, this.perPage);
+    }
     private resetModal() {
       this.deleteItemId = null;
     }
-
-    private showConfirmationModal(id: number) {
-      this.deleteItemId = id;
-      this.$bvModal.show("deleteConfirmation");
-    }
   }
+
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/scss/_todos.scss";
+  @import '@/assets/scss/_todos.scss';
 </style>

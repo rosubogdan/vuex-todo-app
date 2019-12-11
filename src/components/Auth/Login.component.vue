@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+
+    <Loader :is-loading="IS_LOADING" />
+
     <b-row class="text-center mb-3">
       <b-col sm=12>
         <h3>{{CONTENT.LOGIN.HEADER}}</h3>
@@ -72,14 +75,15 @@
             </section>
 
             <!-- Invalid credentials validation -->
-            <div class="errors text-left mb-3"
-                 v-if="loginError">
-              <span class="text-left danger">{{loginError}}</span>
-            </div>
+            <Alert :variant="CONTENT.DEFAULT.ALERT.DANGER"
+                   v-if="HAS_ERROR">
+              <span class="text-center">{{ERROR_MESSAGE}} </span>
+            </Alert>
 
             <!-- Submit -->
             <b-button variant="success"
-                      type="submit">
+                      type="submit"
+                      :size="SIZE.DEFAULT">
               {{CONTENT.BUTTON.LOGIN}}
             </b-button>
           </b-form>
@@ -90,47 +94,50 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
-import { validationMixin } from 'vuelidate';
-import { LoginFormValidation, VALIDATION } from '@/validations';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { mapGetters } from 'vuex';
+  import Loader from '@/common/Loader.component.vue';
+  import Alert from '@/common/Alert.component.vue';
 
-import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
+  import { validationMixin } from 'vuelidate';
+  import { LoginFormValidation, VALIDATION } from '@/validations';
 
-import { LOGIN_STATUS, LOGIN_MESSAGE } from '@/store/modules/auth/getters';
-import { LOGIN_ACTION } from '@/store/modules/auth/actions';
+  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
-import { LoginForm } from '@/models/forms/loginForm';
+  import { LOGIN_STATUS, IS_LOADING, HAS_ERROR, ERROR_MESSAGE } from '@/store/modules/auth/getters';
+  import { LOGIN_ACTION } from '@/store/modules/auth/actions';
 
-@Component({
-  mixins: [validationMixin],
-  validations: LoginFormValidation,
-  computed: mapGetters({ LOGIN_STATUS, LOGIN_MESSAGE }),
-})
-export default class LoginComponent extends Vue {
-  private SIZE = SIZE;
-  private CONTENT = CONTENT;
-  private VALIDATION = VALIDATION;
+  import { LoginForm } from '@/models/forms/loginForm';
 
-  private form: LoginForm = <LoginForm>{};
-  private loginError = null;
-  private show: boolean = false;
+  @Component({
+    components: { Loader, Alert },
+    mixins: [validationMixin],
+    validations: LoginFormValidation,
+    computed: mapGetters({ IS_LOADING, LOGIN_STATUS, HAS_ERROR, ERROR_MESSAGE }),
+  })
+  export default class LoginComponent extends Vue {
+    private SIZE = SIZE;
+    private CONTENT = CONTENT;
+    private VALIDATION = VALIDATION;
 
-  private toggleShowHide() {
-    this.show = !this.show; 
-  }
+    private form: LoginForm = {} as LoginForm;
 
-  private async handleSubmit() {
-    this.$v.$touch(); 
-    if (!this.$v.$invalid) {
-      await this.$store.dispatch(LOGIN_ACTION, this.form); 
-      this.loginError = this.$store.getters[LOGIN_MESSAGE];
-      if (this.$store.getters[LOGIN_STATUS]) {
-        this.$router.push({ path: CONTENT_ROUTES.HOME.path }); 
+    private show: boolean = false;
+
+    private toggleShowHide() {
+      this.show = !this.show;
+    }
+
+    private async handleSubmit() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        await this.$store.dispatch(LOGIN_ACTION, this.form);
+        if (this.$store.getters[LOGIN_STATUS]) {
+          this.$router.push(CONTENT_ROUTES.HOME.path);
+        }
       }
     }
   }
-}
 </script>
 
 

@@ -1,43 +1,52 @@
 import User from '@/models/auth/user';
 
 import { REGISTER, LOGIN, LOGOUT } from '@/services/firebase.service';
-import {STORE_AUTH_MODULE} from '@/constants';
+import { STORE_AUTH_MODULE } from '@/constants';
 import {
   REGISTER_MUTATION,
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
+  IS_LOADING_MUTATION,
 } from './mutations';
-
-const REGISTER_SUCCESS_MESSAGE = 'Registered !';
 
 export const REGISTER_ACTION = `${STORE_AUTH_MODULE}/REGISTER_ACTION`;
 export const LOGIN_ACTION = `${STORE_AUTH_MODULE}/LOGIN_ACTION`;
 export const LOGOUT_ACTION = `${STORE_AUTH_MODULE}/LOGOUT_ACTION`;
 
 export const actions = {
+
   REGISTER_ACTION: async ({ commit }: any, user: User) => {
     try {
+      commit(IS_LOADING_MUTATION, { isLoading: true });
       await REGISTER(user);
-      commit(REGISTER_MUTATION, { status: true, message: REGISTER_SUCCESS_MESSAGE });
+      commit(REGISTER_MUTATION, { hasError: false });
+      commit(IS_LOADING_MUTATION, { isLoading: false });
     } catch (error) {
       console.error(error);
-      commit(REGISTER_MUTATION, { status: false, message: error.message });
+      commit(REGISTER_MUTATION, { hasError: true, errorMessage: error.message });
+      commit(IS_LOADING_MUTATION, { isLoading: false });
     }
   },
 
   LOGIN_ACTION: async ({ commit }: any, user: User) => {
     try {
+      commit(IS_LOADING_MUTATION, { isLoading: true });
       const response: any = await LOGIN(user);
-      const userInfo: User = new User(response.user.uid, response.user.email, response.user.displayName);
-      commit(LOGIN_MUTATION, { user: userInfo, status: true });
+      const userInfo: Partial<User> = response.user;
+      commit(LOGIN_MUTATION, { user: userInfo, hasError: false });
+      commit(IS_LOADING_MUTATION, { isLoading: false });
+
     } catch (error) {
-      commit(LOGIN_MUTATION, { user: null, status: false, message: error.message });
+      commit(LOGIN_MUTATION, { user: null, hasError: true, errorMessage: error.message });
+      commit(IS_LOADING_MUTATION, { isLoading: false });
     }
   },
 
-  LOGOUT_ACTION: async ({ commit }: any, user: User) => {
+  LOGOUT_ACTION: async ({ commit }: any, payload: any) => {
+    commit(IS_LOADING_MUTATION, { isLoading: true });
     await LOGOUT();
     commit(LOGOUT_MUTATION, null);
+    commit(IS_LOADING_MUTATION, { isLoading: false });
 
   },
 };

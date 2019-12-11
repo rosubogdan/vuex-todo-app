@@ -2,9 +2,13 @@
 @import "node_modules/bootstrap-vue/src/index.scss";
 @import "./variables";
 
+html {
+  background-color: $dark;
+}
+
 *,
 body {
-  background-color: $dark;
+  background-color: transparent;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

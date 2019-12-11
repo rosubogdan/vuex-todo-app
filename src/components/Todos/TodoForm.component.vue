@@ -104,7 +104,8 @@
 
             <!-- Submit ADD-->
             <b-button variant="success"
-                      type="submit">
+                      type="submit"
+                      :size="SIZE.DEFAULT">
               <i :class="[addNew ? 'fas fa-check no-bg' : 'fas fa-save no-bg']"></i>
               {{addNew ? CONTENT.BUTTON.ADD : CONTENT.BUTTON.SAVE}}
             </b-button>
@@ -129,12 +130,12 @@
 
   import {
     ADD_TODO_ACTION,
-    UPDATE_TODO_ACTION
+    UPDATE_TODO_ACTION,
   } from '@/store/modules/todos/actions';
 
   @Component({
     mixins: [validationMixin],
-    validations: TodoFormValidation
+    validations: TodoFormValidation,
   })
   export default class TodoForm extends Vue {
     @Prop() public addNew: boolean;
@@ -144,7 +145,7 @@
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 
-    private form: AddTodoFrom = <AddTodoFrom>this.todo;
+    private form: AddTodoFrom = this.todo as AddTodoFrom;
     public priorities = Priorities;
 
     constructor() {

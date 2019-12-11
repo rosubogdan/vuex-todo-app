@@ -4,10 +4,11 @@ import 'firebase/firestore';
 
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
-import enums from 'vue-enums';
 
 import App from '@/App.vue';
 import BootstrapVue from 'bootstrap-vue';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 import router from '@/router';
 import store from '@/store';
 import '@/registerServiceWorker';
@@ -17,7 +18,7 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue, Vuelidate, enums);
+Vue.use(BootstrapVue, Vuelidate);
 
 let app: any = '';
 

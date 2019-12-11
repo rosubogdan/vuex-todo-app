@@ -18,6 +18,12 @@ export const DEFAULT = {
     SHOW: 'Show',
     CLOSE: 'Close',
   },
+  ALERT: {
+    SUCCESS: 'success',
+    DANGER: 'danger',
+    WARNING: 'worning',
+    INFO: 'info',
+  },
 };
 
 export const APP = {
