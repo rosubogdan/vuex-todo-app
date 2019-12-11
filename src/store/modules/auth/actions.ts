@@ -45,7 +45,7 @@ export const actions = {
   LOGOUT_ACTION: async ({ commit }: any, payload: any) => {
     commit(IS_LOADING_MUTATION, { isLoading: true });
     await LOGOUT();
-    commit(LOGOUT_MUTATION, null);
+    commit(LOGOUT_MUTATION, { user: null });
     commit(IS_LOADING_MUTATION, { isLoading: false });
 
   },

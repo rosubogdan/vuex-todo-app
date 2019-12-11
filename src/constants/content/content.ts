@@ -45,7 +45,12 @@ export const HOME = {
   BUY_CARD: {
     TITLE: 'Buy List',
   },
-  COPY: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, eum architecto magni quam eligendi pariatur, amet repudiandae nostrum ipsam, cupiditate rem? Quo sunt, eveniet aut distinctio iure odit doloribus tempore numquam ut nihil consequuntur et culpa quam veniam repellendus? Ipsum accusantium, animi deleniti temporibus, ab totam eius molestias sapiente aliquid quo magnam sunt autem illum ipsa. Et excepturi cupiditate animi.',
+  COPY: `Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+  Sunt, eum architecto magni quam eligendi pariatur, amet repudiandae
+ nostrum ipsam, cupiditate rem? Quo sunt, eveniet aut distinctio iure odit
+ doloribus tempore numquam ut nihil consequuntur et culpa quam veniam repellendus?
+  Ipsum accusantium, animi deleniti temporibus, ab totam eius molestias sapiente
+  aliquid quo magnam sunt autem illum ipsa. Et excepturi cupiditate animi.`,
 };
 
 export const TODO = {
