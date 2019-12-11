@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+
+    <Loader :is-loading="IS_LOADING" />
+
     <b-row class="text-center mb-3">
       <b-col sm=12>
         <h3>{{CONTENT.REGISTER.HEADER}}</h3>
@@ -113,15 +116,15 @@
             </section>
 
             <!-- Invalid credentials validation -->
-            <div class="errors text-left mb-3"
-                 v-if="registerError">
-
-              <span class="text-left danger">{{registerError}}</span>
-            </div>
+            <Alert :variant="CONTENT.DEFAULT.ALERT.DANGER"
+                   v-if="HAS_ERROR">
+              <span class="text-center">{{ERROR_MESSAGE}} </span>
+            </Alert>
 
             <!-- Submit -->
             <b-button variant="success"
-                      type="submit">
+                      type="submit"
+                      :size="SIZE.DEFAULT">
               {{CONTENT.BUTTON.REGISTER}}
             </b-button>
           </b-form>
@@ -132,52 +135,49 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
-import { validationMixin } from 'vuelidate';
-import { RegisterFormValidation, VALIDATION } from '@/validations';
-import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { mapGetters } from 'vuex';
+  import Loader from '@/common/Loader.component.vue';
+  import Alert from '@/common/Alert.component.vue';
 
-import {
-  REGISTER_STATUS,
-  REGISTER_MESSAGE,
-} from '@/store/modules/auth/getters';
-import { REGISTER_ACTION } from '@/store/modules/auth/actions';
-import { RegisterForm } from '@/models/forms/registerForm';
+  import { validationMixin } from 'vuelidate';
+  import { RegisterFormValidation, VALIDATION } from '@/validations';
 
-@Component({
-  mixins: [validationMixin],
-  validations: RegisterFormValidation,
-  computed: mapGetters({ REGISTER_STATUS, REGISTER_MESSAGE }),
-})
-export default class RegisterComponent extends Vue {
-  private SIZE = SIZE;
-  private CONTENT = CONTENT;
-  private VALIDATION = VALIDATION;
+  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
-  private form: RegisterForm = <RegisterForm>{};
+  import { IS_LOADING, HAS_ERROR, ERROR_MESSAGE } from '@/store/modules/auth/getters';
+  import { REGISTER_ACTION } from '@/store/modules/auth/actions';
 
-  private registerError = null;
-  private showPassword: boolean = false;
-  private showConfirmPassword: boolean = false;
+  import { RegisterForm } from '@/models/forms/registerForm';
 
-  constructor() {
-    super(); 
-  }
+  @Component({
+    components: { Loader, Alert },
+    mixins: [validationMixin],
+    validations: RegisterFormValidation,
+    computed: mapGetters({ IS_LOADING, HAS_ERROR, ERROR_MESSAGE }),
+  })
+  export default class RegisterComponent extends Vue {
+    private SIZE = SIZE;
+    private CONTENT = CONTENT;
+    private VALIDATION = VALIDATION;
 
-  private async handleSubmit() {
-    this.$v.$touch(); 
-    if (!this.$v.$invalid) {
-      await this.$store.dispatch(REGISTER_ACTION, this.form); 
-      this.registerError = this.$store.getters[REGISTER_MESSAGE];
-      if (this.$store.getters[REGISTER_STATUS]) {
-        this.$router.push({ path: CONTENT_ROUTES.LOGIN.path }); 
+    private form: RegisterForm = {} as RegisterForm;
+
+    private showPassword: boolean = false;
+    private showConfirmPassword: boolean = false;
+
+    private async handleSubmit() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        await this.$store.dispatch(REGISTER_ACTION, this.form);
+        if (!this.$store.getters[HAS_ERROR]) {
+          this.$router.push(CONTENT_ROUTES.LOGIN.path);
+        }
       }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/scss/_register.scss";
+  @import '@/assets/scss/_register.scss';
 </style>

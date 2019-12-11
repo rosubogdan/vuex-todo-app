@@ -5,13 +5,14 @@ import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
 
-const user: User = new User('', '');
+const user: User = {} as User;
 
 const state: State = {
   user,
   isLoggedIn: false,
-  loginStatus: null,
-  registerStatus: null,
+  isLoading: false,
+  hasError: false,
+  errorMessage: '',
 };
 
 

@@ -4,7 +4,6 @@ interface Todo {
   title: string;
   description?: string;
   priority: boolean;
-  status: boolean;
   completed: boolean;
 }
 

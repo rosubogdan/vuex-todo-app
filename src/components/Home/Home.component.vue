@@ -9,7 +9,8 @@
           <i class="far fa-check-circle"></i>
           <h3>{{CONTENT.HOME.TODO_CARD.TITLE}}</h3>
           <router-link :to="CONTENT_ROUTES.TODOS.path">
-            <b-button variant="success">
+            <b-button variant="success"
+                      :size="SIZE.DEFAULT">
               {{CONTENT.BUTTON.GO}}
             </b-button>
           </router-link>
@@ -23,7 +24,8 @@
           <i class="fas fa-cart-arrow-down"></i>
           <h3>{{CONTENT.HOME.BUY_CARD.TITLE}}</h3>
           <router-link :to="CONTENT_ROUTES.BUY.path">
-            <b-button variant="success">
+            <b-button variant="success"
+                      :size="SIZE.DEFAULT">
               {{CONTENT.BUTTON.GO}}
             </b-button>
           </router-link>
@@ -41,19 +43,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { CONTENT, CONTENT_ROUTES } from '@/constants';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
-@Component({})
-export default class HomeComponent extends Vue {
-  private CONTENT = CONTENT;
-  private CONTENT_ROUTES = CONTENT_ROUTES;
-  constructor() {
-    super();
+  @Component({})
+  export default class HomeComponent extends Vue {
+    private SIZE = SIZE;
+    private CONTENT = CONTENT;
+    private CONTENT_ROUTES = CONTENT_ROUTES;
+    constructor() {
+      super();
+    }
   }
-}
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/scss/_home.scss";
+  @import '@/assets/scss/_home.scss';
 </style>

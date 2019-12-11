@@ -1,9 +1,8 @@
-class User {
-  constructor(
-    public uid: string,
-    public email: string,
-    public password: string = '',
-    public displayName: string = '') { }
+export interface User {
+  uid: string;
+  email: string;
+  password: string;
+  displayName: string;
 }
 
 export default User;
