@@ -1,0 +1,41 @@
+.btn-success {
+  color: $white;
+  background-color: $green;
+  border-color: $green;
+  &:hover {
+    background-color: darken($green, 10%);
+    border-color: darken($green, 10%);
+  }
+  &:active,
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.btn-danger {
+  color: $white;
+  background-color: $red;
+  border-color: $red;
+  &:hover {
+    background-color: darken($red, 10%);
+    border-color: darken($red, 10%);
+  }
+  &:active,
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.btn-warning {
+  color: #212529;
+  background-color: $warning;
+  border-color: $warning;
+  &:hover {
+    background-color: darken($warning, 10%);
+    border-color: darken($warning, 10%);
+  }
+  &:active,
+  &:focus {
+    box-shadow: none;
+  }
+}

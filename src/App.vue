@@ -8,21 +8,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
 
-import NavigationComponent from '@/components/Navigation/Navigation.component.vue';
+  import NavigationComponent from '@/components/Navigation/Navigation.component.vue';
 
-@Component({
-  components: { NavigationComponent },
-})
-export default class App extends Vue {
-  constructor() {
-    super();
+  @Component({
+    components: { NavigationComponent },
+  })
+  export default class App extends Vue {
+    constructor() {
+      super();
+    }
   }
-}
 </script>
 
 <style lang="scss">
-  @import "@/assets/scss/_app.scss";
-
+  @import '@/assets/scss/app_main.scss';
 </style>

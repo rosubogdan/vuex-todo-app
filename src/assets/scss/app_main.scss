@@ -1,0 +1,57 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index.scss";
+@import "./_variables";
+@import "./_buttons";
+@import "./_inputs";
+@import "./_navigation";
+@import "./_table";
+@import "./_tabs";
+@import "./_modal";
+@import "./pagination";
+
+html {
+  background-color: $dark;
+}
+
+*,
+body {
+  background-color: transparent;
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: $white;
+
+  .content {
+    border: 1px solid $white;
+    padding: 1.5rem;
+  }
+
+  i {
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .action-buttons i {
+    font-size: 20px;
+    padding: 0.4rem;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .success {
+    color: $green;
+  }
+
+  .warning {
+    color: $warning;
+  }
+
+  .danger {
+    color: $red;
+  }
+}

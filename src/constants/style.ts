@@ -21,3 +21,12 @@ export const LOADER = {
   zIndex: 9999,
 };
 
+export const ALERT = {
+  SUCCESS: 'success',
+  DANGER: 'danger',
+  WARNING: 'worning',
+  INFO: 'info',
+  TOP: 'top',
+  BOTTOM: 'bottom',
+};
+

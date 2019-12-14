@@ -86,7 +86,3 @@
     }
   }
 </script>
-
-<style scoped lang="scss">
-  @import '@/assets/scss/_add.scss';
-</style>

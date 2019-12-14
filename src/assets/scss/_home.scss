@@ -1,4 +1,4 @@
-@import './variables';
+@import "./variables";
 
 .HOME {
   .padding-15 {
@@ -8,6 +8,10 @@
   .card-wrapper {
     border: 1px solid $white;
     padding: 2rem;
+    a {
+      color: $white;
+      text-decoration: none;
+    }
 
     i {
       font-size: 6rem;

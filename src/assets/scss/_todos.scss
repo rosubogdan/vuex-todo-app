@@ -1,26 +1,26 @@
-@import "./variables";
-.TODOS {
-  .wrapper {
-    #filterInput::placeholder {
-      text-align: center;
-    }
-    #perPageSelect {
-      cursor: pointer;
-    }
+// @import "./variables";
+// .TODOS {
+//   .wrapper {
+//     #filterInput::placeholder {
+//       text-align: center;
+//     }
+//     #perPageSelect {
+//       cursor: pointer;
+//     }
 
-    #todosPagination {
-      .page-item {
-        .page-link {
-          position: relative;
-          display: block;
-          padding: 0.5rem 0.75rem;
-          margin-left: -1px;
-          line-height: 1.25;
-          color: #007bff;
-          background-color: #343a44;
-          border: 1px solid #dee2e6;
-        }
-      }
-    }
-  }
-}
+//     #todosPagination {
+//       .page-item {
+//         .page-link {
+//           position: relative;
+//           display: block;
+//           padding: 0.5rem 0.75rem;
+//           margin-left: -1px;
+//           line-height: 1.25;
+//           color: #007bff;
+//           background-color: #343a44;
+//           border: 1px solid #dee2e6;
+//         }
+//       }
+//     }
+//   }
+// }

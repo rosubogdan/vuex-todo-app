@@ -23,10 +23,12 @@ export const mutations = {
 
   UPDATE_TODO_MUTATION: (state: State, { todo, hasError, errorMessage }: State) => {
     if (todo) {
-      const index = state.todos.findIndex((item: Todo) => item.id === todo.id);
-      if (index !== -1) {
-        state.todos[index] = todo;
-      }
+      state.todos = state.todos.map((item: Todo) => {
+        if (item.id === todo.id) {
+          item = todo;
+        }
+        return item;
+      });
     }
     state.hasError = hasError;
     state.errorMessage = errorMessage;

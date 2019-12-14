@@ -68,7 +68,7 @@
     {
       "userId": 1,
       "id": 8,
-      "title": "todo 8",
+      "title": "todo 8 - 1",
       "completed": true,
       "description": " Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit maxime impedit dolores. Et, magni. Accusamus non dicta est, corporis assumenda porro blanditiis voluptatum. Natus voluptatibus distinctio reprehenderit accusamus quibusdam consequatur.",
       "priority": 0,
@@ -95,18 +95,21 @@
       "_showDetails": false
     },
     {
-      "title": "test",
-      "description": "sdasd",
-      "priority": 0,
+      "isTrusted": true,
+      "title": "test modal",
+      "description": "modal description",
+      "priority": 1,
       "status": false,
-      "id": 11
+      "id": 21,
+      "_showDetails": false
     },
     {
-      "title": "test",
-      "description": "sdasd",
+      "isTrusted": true,
+      "title": "test modal 2",
+      "description": "test descriptoin 2",
       "priority": 0,
       "status": false,
-      "id": 12
+      "id": 22
     }
   ]
 }

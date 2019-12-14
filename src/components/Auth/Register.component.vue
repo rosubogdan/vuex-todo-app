@@ -43,7 +43,7 @@
 
             <!-- Password -->
             <section class="password">
-              <b-input-group class="login-password">
+              <b-input-group class="register-password">
                 <b-form-input id="password"
                               class="mb-3"
                               v-model.trim="form.password"
@@ -56,8 +56,7 @@
                             class="mb-3"
                             @click="showPassword = !showPassword"
                             :size="SIZE.DEFAULT">
-                    <i title="View"
-                       class="show-password"
+                    <i title="Show"
                        :class="[showPassword ? 'fas fa-eye-slash': 'far fa-eye']">
                     </i>
                   </b-button>
@@ -66,7 +65,6 @@
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
-
                 <span class="text-left danger"
                       v-if="!$v.form.password.required">
                   {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.PASSWORD)}}
@@ -93,7 +91,7 @@
                             class="mb-3"
                             :size="SIZE.DEFAULT"
                             @click="showConfirmPassword = ! showConfirmPassword">
-                    <i class="show-password"
+                    <i title="Show"
                        :class="[showConfirmPassword ? 'fas fa-eye-slash': 'far fa-eye']">
                     </i>
                   </b-button>
@@ -116,7 +114,8 @@
             </section>
 
             <!-- Invalid credentials validation -->
-            <Alert :variant="CONTENT.DEFAULT.ALERT.DANGER"
+            <Alert :variant="ALERT.DANGER"
+                   :position="ALERT.BOTTOM"
                    v-if="HAS_ERROR">
               <span class="text-center">{{ERROR_MESSAGE}} </span>
             </Alert>
@@ -143,7 +142,7 @@
   import { validationMixin } from 'vuelidate';
   import { RegisterFormValidation, VALIDATION } from '@/validations';
 
-  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
+  import { CONTENT, CONTENT_ROUTES, SIZE, ALERT } from '@/constants';
 
   import { IS_LOADING, HAS_ERROR, ERROR_MESSAGE } from '@/store/modules/auth/getters';
   import { REGISTER_ACTION } from '@/store/modules/auth/actions';
@@ -157,6 +156,7 @@
     computed: mapGetters({ IS_LOADING, HAS_ERROR, ERROR_MESSAGE }),
   })
   export default class RegisterComponent extends Vue {
+    private ALERT = ALERT;
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
@@ -177,7 +177,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  @import '@/assets/scss/_register.scss';
-</style>

@@ -57,7 +57,6 @@
                             @click="toggleShowHide()"
                             :size="SIZE.DEFAULT">
                     <i title="View"
-                       class="show-password"
                        :class="[show ? 'fas fa-eye-slash': 'far fa-eye']">
                     </i>
                   </b-button>
@@ -75,7 +74,8 @@
             </section>
 
             <!-- Invalid credentials validation -->
-            <Alert :variant="CONTENT.DEFAULT.ALERT.DANGER"
+            <Alert :variant="ALERT.DANGER"
+                   :position="ALERT.BOTTOM"
                    v-if="HAS_ERROR">
               <span class="text-center">{{ERROR_MESSAGE}} </span>
             </Alert>
@@ -102,7 +102,7 @@
   import { validationMixin } from 'vuelidate';
   import { LoginFormValidation, VALIDATION } from '@/validations';
 
-  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
+  import { CONTENT, CONTENT_ROUTES, SIZE, ALERT } from '@/constants';
 
   import { LOGIN_STATUS, IS_LOADING, HAS_ERROR, ERROR_MESSAGE } from '@/store/modules/auth/getters';
   import { LOGIN_ACTION } from '@/store/modules/auth/actions';
@@ -116,6 +116,7 @@
     computed: mapGetters({ IS_LOADING, LOGIN_STATUS, HAS_ERROR, ERROR_MESSAGE }),
   })
   export default class LoginComponent extends Vue {
+    private ALERT = ALERT;
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
