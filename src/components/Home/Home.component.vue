@@ -6,9 +6,9 @@
              lg="6"
              class="padding-15">
         <div class="card-wrapper">
-          <i class="far fa-check-circle"></i>
-          <h3>{{CONTENT.HOME.TODO_CARD.TITLE}}</h3>
           <router-link :to="CONTENT_ROUTES.TODOS.path">
+            <i class="far fa-check-circle"></i>
+            <h3>{{CONTENT.HOME.TODO_CARD.TITLE}}</h3>
             <b-button variant="success"
                       :size="SIZE.DEFAULT">
               {{CONTENT.BUTTON.GO}}
@@ -21,9 +21,9 @@
              lg="6"
              class="padding-15">
         <div class="card-wrapper">
-          <i class="fas fa-cart-arrow-down"></i>
-          <h3>{{CONTENT.HOME.BUY_CARD.TITLE}}</h3>
           <router-link :to="CONTENT_ROUTES.BUY.path">
+            <i class="fas fa-cart-arrow-down"></i>
+            <h3>{{CONTENT.HOME.BUY_CARD.TITLE}}</h3>
             <b-button variant="success"
                       :size="SIZE.DEFAULT">
               {{CONTENT.BUTTON.GO}}

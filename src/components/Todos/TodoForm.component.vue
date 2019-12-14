@@ -4,12 +4,11 @@
     <b-row class="text-center mb-3"
            align-h="center">
       <b-col sm="12"
-             md="8"
-             lg="8">
+             md="10"
+             lg="10">
         <div class="">
 
-          <b-form @submit.prevent="handleSubmit"
-                  novalidate>
+          <b-form novalidate>
 
             <!-- Title -->
             <section class="title">
@@ -54,12 +53,9 @@
               <b-form-select id="priority"
                              v-model="form.priority"
                              :size="SIZE.DEFAULT">
-                <template v-slot:first>
-                  <option value=""
-                          disabled>
-                    {{CONTENT.INPUT.PRIORITY_PLACEHOLDER}}
-                  </option>
-                </template>
+                <option :value="null">
+                  {{CONTENT.INPUT.PRIORITY_PLACEHOLDER}}
+                </option>
 
                 <option v-for="priority in priorities"
                         :key="priority.value"
@@ -101,14 +97,7 @@
                 </span>
               </div>
             </section>
-
-            <!-- Submit ADD-->
-            <b-button variant="success"
-                      type="submit"
-                      :size="SIZE.DEFAULT">
-              <i :class="[addNew ? 'fas fa-check no-bg' : 'fas fa-save no-bg']"></i>
-              {{addNew ? CONTENT.BUTTON.ADD : CONTENT.BUTTON.SAVE}}
-            </b-button>
+            <slot name="form-buttons"></slot>
           </b-form>
         </div>
       </b-col>
@@ -118,51 +107,35 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator';
-  import { mapGetters } from 'vuex';
   import { validationMixin } from 'vuelidate';
-  import { AddTodoValidation } from '@/validations/addTodo.validation';
 
   import { TodoFormValidation, VALIDATION } from '@/validations';
 
   import { CONTENT, SIZE } from '@/constants';
   import { Priorities } from '@/models/todo/priorities';
-  import { AddTodoFrom } from '@/models/forms/addTodoForm';
 
-  import {
-    ADD_TODO_ACTION,
-    UPDATE_TODO_ACTION,
-  } from '@/store/modules/todos/actions';
+  import Todo from '@/models/todo/todo';
 
   @Component({
     mixins: [validationMixin],
     validations: TodoFormValidation,
   })
   export default class TodoForm extends Vue {
-    @Prop() public addNew: boolean;
-    @Prop() public todo: any;
+    @Prop() public todo: Todo;
     public priorities = Priorities;
 
     private SIZE = SIZE;
     private CONTENT = CONTENT;
     private VALIDATION = VALIDATION;
 
-    private form: AddTodoFrom = this.todo as AddTodoFrom;
+    private form: Todo = this.todo;
 
     constructor() {
       super();
     }
 
-    private async handleSubmit() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        if (this.addNew) {
-          await this.$store.dispatch(ADD_TODO_ACTION, this.form);
-        } else {
-          const test = Object.assign(this.form);
-          test._showDetails = false;
-          await this.$store.dispatch(UPDATE_TODO_ACTION, test);
-        }
-      }
+    private async beforeDestroy() {
+      delete this.form;
     }
   }
 </script>

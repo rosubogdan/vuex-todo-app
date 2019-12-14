@@ -1,0 +1,25 @@
+// tabs
+.nav-tabs {
+  border-bottom: 1px solid $green;
+}
+
+.tab-active {
+  color: $active-route;
+}
+
+.nav-tabs .nav-link {
+  border-bottom: 1px solid $green;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  color: $white;
+  a {
+    color: $white;
+  }
+}
+.nav-tabs .nav-link.active {
+  color: $active-route;
+  background-color: transparent;
+  border: 1px solid $green;
+  border-color: $green;
+  border-bottom: none;
+}

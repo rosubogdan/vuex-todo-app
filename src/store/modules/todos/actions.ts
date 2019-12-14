@@ -59,7 +59,7 @@ export const actions = {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
       const response = await updateTodo(todo);
-      commit(UPDATE_TODO_MUTATION, { todo: response });
+      commit(UPDATE_TODO_MUTATION, { todo: response.data });
       commit(IS_LOADING_MUTATION, { isLoading: false });
 
     } catch (error) {
