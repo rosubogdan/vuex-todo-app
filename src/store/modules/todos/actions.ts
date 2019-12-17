@@ -11,6 +11,8 @@ import {
   deleteTodo,
 } from '@/services/api.service';
 
+import { ADD_TODO } from '@/services/firebase.service';
+
 import {
   GET_TODOS_MUTATION,
   ADD_TODO_MUTATION,
@@ -46,6 +48,11 @@ export const actions = {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
       const response = await addNewTodo(todo);
+
+      const res = await ADD_TODO(todo);
+      console.log('res ', res);
+
+
       commit(ADD_TODO_MUTATION, { todo: response.data });
       commit(IS_LOADING_MUTATION, { isLoading: false });
     } catch (error) {

@@ -5,6 +5,8 @@ interface Todo {
   description?: string;
   priority: boolean;
   completed: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default Todo;
