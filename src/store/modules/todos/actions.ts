@@ -1,17 +1,18 @@
 import Todo from '@/models/todo/todo';
-import State from '@/models/todo/todo.state';
 
 import { STORE_TODOS_MODULE } from '@/constants';
 
 import {
-  getTodo,
   getFiltered,
-  addNewTodo,
-  updateTodo,
-  deleteTodo,
 } from '@/services/api.service';
 
-import { ADD_TODO } from '@/services/firebase.service';
+import {
+  ADD_TODO,
+  GET_TODOS,
+  GET_TODO,
+  UPDATE_TODO,
+  DELETE_TODO,
+} from '@/services';
 
 import {
   GET_TODOS_MUTATION,
@@ -33,8 +34,8 @@ export const actions = {
   FETCH_TODOS_ACTION: async ({ commit }: any) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      const response = await getTodo();
-      commit(GET_TODOS_MUTATION, { todos: response.data });
+      const response = await GET_TODOS();
+      commit(GET_TODOS_MUTATION, { todos: response });
       commit(IS_LOADING_MUTATION, { isLoading: false });
     } catch (error) {
       console.error(error);
@@ -47,13 +48,9 @@ export const actions = {
   ADD_TODO_ACTION: async ({ commit }: any, todo: Todo) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      const response = await addNewTodo(todo);
-
-      const res = await ADD_TODO(todo);
-      console.log('res ', res);
-
-
-      commit(ADD_TODO_MUTATION, { todo: response.data });
+      const id = await ADD_TODO(todo);
+      const response = await GET_TODO(id);
+      commit(ADD_TODO_MUTATION, { todo: response });
       commit(IS_LOADING_MUTATION, { isLoading: false });
     } catch (error) {
       console.error(error);
@@ -65,8 +62,9 @@ export const actions = {
   UPDATE_TODO_ACTION: async ({ commit }: any, todo: Todo) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      const response = await updateTodo(todo);
-      commit(UPDATE_TODO_MUTATION, { todo: response.data });
+      await UPDATE_TODO(todo);
+      const updatedTodo = await GET_TODO(todo.id);
+      commit(UPDATE_TODO_MUTATION, { todo: updatedTodo });
       commit(IS_LOADING_MUTATION, { isLoading: false });
 
     } catch (error) {
@@ -77,6 +75,7 @@ export const actions = {
   },
 
   CHANGE_PER_PAGE_ACTION: async ({ commit }: any, filter: number) => {
+    // todo - use firebase pagination query
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
       const response = await getFiltered(filter);
@@ -93,7 +92,7 @@ export const actions = {
   DELETE_TODO_ACTION: async ({ commit }: any, id: number) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      await deleteTodo(id);
+      await DELETE_TODO(id);
       commit(DELETE_TODO_MUTATION, id);
       commit(IS_LOADING_MUTATION, { isLoading: false });
 

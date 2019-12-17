@@ -3,8 +3,6 @@ import * as admin from 'firebase-admin';
 
 import { USERS } from '../collections';
 
-admin.initializeApp();
-
 export const sendVerificationEmail = functions.auth
   .user()
   .onCreate((user: any) => {
@@ -15,9 +13,10 @@ export const sendVerificationEmail = functions.auth
 
 export const createUser = functions.firestore
   .document(`${USERS}/{id}`)
-  .onCreate(async (snapshot) => {
+  .onCreate(async (snapshot, context) => {
     try {
       return snapshot.ref.set({
+        id: context.params.id,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       }, { merge: true });

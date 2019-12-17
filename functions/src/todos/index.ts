@@ -3,13 +3,13 @@ import * as admin from 'firebase-admin';
 
 import { TODOS } from '../collections';
 
-admin.initializeApp();
-
 export const createTodo = functions.firestore
   .document(`${TODOS}/{id}`)
-  .onCreate(async (snapshot) => {
+  .onCreate(async (snapshot, context) => {
+
     try {
       return snapshot.ref.set({
+        id: context.params.id,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       }, { merge: true });
