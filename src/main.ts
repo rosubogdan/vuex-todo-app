@@ -7,6 +7,7 @@ import Vuelidate from 'vuelidate';
 
 import App from '@/App.vue';
 import BootstrapVue from 'bootstrap-vue';
+import VueMoment from 'vue-moment';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 import router from '@/router';
@@ -19,7 +20,7 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue, Vuelidate);
+Vue.use(BootstrapVue, Vuelidate, VueMoment);
 
 let app: any = '';
 

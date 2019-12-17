@@ -54,7 +54,7 @@
         <b-button variant="success"
                   :title="CONTENT.DEFAULT.TITLE.ADD"
                   :size="SIZE.DEFAULT"
-                  @click="openAddEditModal">
+                  @click="openAddEditModal()">
           <i class="fas fa-plus"></i>
         </b-button>
       </b-col>
@@ -283,7 +283,7 @@
 
     private getPriority = getPriority;
 
-    private todo: Todo = {} as Todo;
+    private todo: Partial<Todo> = {};
 
     constructor() {
       super();
@@ -301,12 +301,13 @@
 
     // Add/Edit Todo
     private openAddEditModal(todo: any) {
+      if (todo) { delete todo.isTrusted; }
       this.todo = { ...todo };
       this.$bvModal.show('add-edit-modal');
     }
 
     private cancelAddEditModal() {
-      this.todo = {} as Todo;
+      this.todo = {};
       this.$bvModal.hide('add-edit-modal');
     }
 
