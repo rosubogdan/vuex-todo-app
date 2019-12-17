@@ -62,6 +62,15 @@ export const TODO = {
 export const BUY = {};
 
 export const INPUT = {
+  FIRST_NAME: 'First name',
+  FIRST_NAME_PLACEHOLDER: 'Enter first name',
+
+  LAST_NAME: 'Last name',
+  LAST_NAME_PLACEHOLDER: 'Enter last name',
+
+  USERNAME: 'Username',
+  USERNAME_PLACEHOLDER: 'Pick a username',
+
   EMAIL: 'Email',
   EMAIL_PLACEHOLDER: 'Email address',
 

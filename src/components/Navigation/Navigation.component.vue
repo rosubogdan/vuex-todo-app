@@ -20,15 +20,20 @@
           <b-nav-item v-for="route in LOGGED_IN_ROUTES"
                       :key="route.path"
                       :to="route.path"
+                      :title="route.name"
                       exact
                       exact-active-class="active">
-            <i :class="route.icon"></i> {{route.name}}
+            <i :class="route.icon"></i>
+            <span class="d-sm-block d-md-none"> {{route.name}}</span>
+
           </b-nav-item>
 
           <b-nav-item @click="Logout"
+                      :title="CONTENT_ROUTES.LOGOUT.name"
                       exact
                       exact-active-class="active">
-            {{CONTENT_ROUTES.LOGOUT.name}} <i class="fas fa-sign-out-alt"></i>
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="d-sm-block d-md-none"> {{CONTENT_ROUTES.LOGOUT.name}}</span>
           </b-nav-item>
         </b-navbar-nav>
 
@@ -37,9 +42,11 @@
           <b-nav-item v-for="route in LOGGED_OUT_ROUTES"
                       :key="route.path"
                       :to="route.path"
+                      :title="route.name"
                       exact
                       exact-active-class="active">
-            <i :class="route.icon"></i> {{route.name}}
+            <i :class="route.icon"></i>
+            <span class="d-sm-block d-md-none"> {{route.name}}</span>
           </b-nav-item>
         </b-navbar-nav>
 

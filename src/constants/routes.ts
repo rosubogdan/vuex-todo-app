@@ -11,6 +11,10 @@ export const CONTENT_ROUTES = {
     path: '/logout',
     name: 'Logout',
   },
+  PROFILE: {
+    path: '/profile',
+    name: 'Profile',
+  },
   HOME: {
     path: '/',
     name: 'Home',

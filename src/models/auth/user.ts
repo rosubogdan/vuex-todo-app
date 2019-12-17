@@ -1,8 +1,10 @@
 export interface User {
-  uid: string;
+  uid?: string;
+  firstName: string;
+  lastName: string;
+  username: string;
   email: string;
   password: string;
-  displayName: string;
 }
 
 export default User;

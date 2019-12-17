@@ -18,6 +18,63 @@
           <b-form @submit.prevent="handleSubmit"
                   novalidate>
 
+            <!-- First Name -->
+            <section class="firstName">
+              <b-input id="firstName"
+                       class="mb-3"
+                       type="text"
+                       v-model.trim="form.firstName"
+                       :placeholder="CONTENT.INPUT.FIRST_NAME"
+                       :size="SIZE.DEFAULT">
+              </b-input>
+              <!-- Validation -->
+              <div class="errors text-left mb-3"
+                   v-if="$v.form.$error">
+                <span class="danger"
+                      v-if="!$v.form.firstName.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.FIRST_NAME)}}
+                </span>
+                <span class="danger"
+                      v-if="!$v.form.firstName.alpha">
+                  {{VALIDATION.FIELD_ALPHA_ERROR(CONTENT.INPUT.FIRST_NAME)}}
+                </span>
+              </div>
+            </section>
+
+            <!-- Last Name -->
+            <section class="lastName">
+              <b-input id="lastName"
+                       class="mb-3"
+                       type="text"
+                       v-model.trim="form.lastName"
+                       :placeholder="CONTENT.INPUT.LAST_NAME"
+                       :size="SIZE.DEFAULT">
+              </b-input>
+              <!-- Validation -->
+              <div class="errors text-left mb-3"
+                   v-if="$v.form.$error">
+                <span class="danger"
+                      v-if="!$v.form.lastName.required">
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.LAST_NAME)}}
+                </span>
+                <span class="danger"
+                      v-if="!$v.form.lastName.alpha">
+                  {{VALIDATION.FIELD_ALPHA_ERROR(CONTENT.INPUT.LAST_NAME)}}
+                </span>
+              </div>
+            </section>
+
+            <!-- Username -->
+            <section class="username">
+              <b-input id="username"
+                       class="mb-3"
+                       type="text"
+                       v-model.trim="form.username"
+                       :placeholder="CONTENT.INPUT.USERNAME"
+                       :size="SIZE.DEFAULT">
+              </b-input>
+            </section>
+
             <!-- Email -->
             <section class="email">
               <b-input id="email"

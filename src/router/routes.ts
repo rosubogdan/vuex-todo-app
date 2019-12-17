@@ -39,12 +39,20 @@ export const ROUTES = [
       requiresAuth: true,
     },
   },
-
   {
     path: '/buy',
     name: 'Buy list',
     icon: 'fas fa-cart-arrow-down',
     component: () => import('@/views/Buy.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    icon: 'fas fa-users-cog',
+    component: () => import('@/views/Profile.vue'),
     meta: {
       requiresAuth: true,
     },

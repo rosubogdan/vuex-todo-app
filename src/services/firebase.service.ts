@@ -12,7 +12,13 @@ export const REGISTER = async (user: User) => {
     .createUserWithEmailAndPassword(user.email, user.password);
   await db.collection(COLLECTION.USERS)
     .doc(response.user.uid)
-    .set({ email: user.email });
+    .set({
+      uid: response.user.uid,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      email: user.email,
+    });
 };
 
 export const LOGIN = async (user: User) => {
