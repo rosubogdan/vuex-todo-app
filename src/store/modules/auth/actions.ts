@@ -1,17 +1,21 @@
 import User from '@/models/auth/user';
 
-import { REGISTER, LOGIN, LOGOUT } from '@/services/firebase.service';
 import { STORE_AUTH_MODULE } from '@/constants';
+
+import { REGISTER, LOGIN, LOGOUT } from '@/services/firebase.service';
+
 import {
   REGISTER_MUTATION,
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
   IS_LOADING_MUTATION,
+  RESET_MUTATION,
 } from './mutations';
 
 export const REGISTER_ACTION = `${STORE_AUTH_MODULE}/REGISTER_ACTION`;
 export const LOGIN_ACTION = `${STORE_AUTH_MODULE}/LOGIN_ACTION`;
 export const LOGOUT_ACTION = `${STORE_AUTH_MODULE}/LOGOUT_ACTION`;
+export const RESET = `${STORE_AUTH_MODULE}/RESET`;
 
 export const actions = {
 
@@ -45,8 +49,9 @@ export const actions = {
   LOGOUT_ACTION: async ({ commit }: any, payload: any) => {
     commit(IS_LOADING_MUTATION, { isLoading: true });
     await LOGOUT();
-    commit(LOGOUT_MUTATION, { user: null });
+    commit(LOGOUT_MUTATION, { user: null, isLoggedIn: false });
     commit(IS_LOADING_MUTATION, { isLoading: false });
-
   },
+
+  RESET: async ({ commit }: any) => commit(RESET_MUTATION),
 };

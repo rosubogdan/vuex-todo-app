@@ -1,15 +1,10 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { USERS } from '../collections';
+admin.initializeApp();
+const db = admin.firestore();
 
-export const sendVerificationEmail = functions.auth
-  .user()
-  .onCreate((user: any) => {
-    user.sendVerificationEmail()
-      .then(() => console.log(`Email sent to ${user.email}`))
-      .catch((error: any) => console.log(error));
-  });
+import { USERS, TODOS } from '../collections';
 
 export const createUser = functions.firestore
   .document(`${USERS}/{id}`)
@@ -47,6 +42,9 @@ export const updateUser = functions.firestore
 
 export const deleteUser = functions.firestore
   .document(`${USERS}/{id}`)
-  .onDelete((snapshot) => {
-    // do some stuff ex: delete all related collections
+  .onDelete(async (snapshot, context) => {
+    const todos = await db.collection(TODOS).where('userId', '==', context.params.id).get();
+    const batch = db.batch();
+    todos.forEach((doc) => { batch.delete(doc.ref); });
+    await batch.commit();
   })

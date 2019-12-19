@@ -58,7 +58,7 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import { LOGOUT_ACTION } from '@/store/modules/auth/actions';
   import { LOGIN_STATUS } from '@/store/modules/auth/getters';
   import { ROUTES } from '@/router/routes';
@@ -69,6 +69,7 @@
 
   @Component({
     computed: mapGetters({ LOGIN_STATUS }),
+    methods: mapActions({ LOGOUT_ACTION }),
   })
   export default class NavigationComponent extends Vue {
     private CONTENT = CONTENT;
@@ -89,6 +90,7 @@
     private async Logout(e: any) {
       e.preventDefault();
       await this.$store.dispatch(LOGOUT_ACTION);
+      await this.$store.dispatch('RESET_ALL');
       this.$router.push(CONTENT_ROUTES.LOGIN.path);
     }
   }

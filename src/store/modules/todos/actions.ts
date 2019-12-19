@@ -34,23 +34,27 @@ export const actions = {
   FETCH_TODOS_ACTION: async ({ commit }: any) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      const response = await GET_TODOS();
-      commit(GET_TODOS_MUTATION, { todos: response });
+      const todos = await GET_TODOS();
+      if (todos.length > 0) {
+        commit(GET_TODOS_MUTATION, { todos });
+      } else {
+        commit(GET_TODOS_MUTATION, { todos: [], hasError: true, errorMessage: 'No todos found!' });
+      }
+      commit(GET_TODOS_MUTATION, { todos });
       commit(IS_LOADING_MUTATION, { isLoading: false });
     } catch (error) {
-      console.error(error);
-      commit(GET_TODOS_MUTATION, { hasError: true, errorMessage: error.message });
+      commit(GET_TODOS_MUTATION, { todos: [], hasError: true, errorMessage: 'Failed to fetch todo list!' });
       commit(IS_LOADING_MUTATION, { isLoading: false });
     }
 
   },
 
-  ADD_TODO_ACTION: async ({ commit }: any, todo: Todo) => {
+  ADD_TODO_ACTION: async ({ commit }: any, addTodo: Todo) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      const id = await ADD_TODO(todo);
-      const response = await GET_TODO(id);
-      commit(ADD_TODO_MUTATION, { todo: response });
+      const id = await ADD_TODO(addTodo);
+      const todo = await GET_TODO(id);
+      commit(ADD_TODO_MUTATION, { todo });
       commit(IS_LOADING_MUTATION, { isLoading: false });
     } catch (error) {
       console.error(error);
@@ -59,12 +63,12 @@ export const actions = {
     }
   },
 
-  UPDATE_TODO_ACTION: async ({ commit }: any, todo: Todo) => {
+  UPDATE_TODO_ACTION: async ({ commit }: any, updateTodo: Todo) => {
     try {
       commit(IS_LOADING_MUTATION, { isLoading: true });
-      await UPDATE_TODO(todo);
-      const updatedTodo = await GET_TODO(todo.id);
-      commit(UPDATE_TODO_MUTATION, { todo: updatedTodo });
+      await UPDATE_TODO(updateTodo);
+      const todo = await GET_TODO(updateTodo.id);
+      commit(UPDATE_TODO_MUTATION, { todo });
       commit(IS_LOADING_MUTATION, { isLoading: false });
 
     } catch (error) {

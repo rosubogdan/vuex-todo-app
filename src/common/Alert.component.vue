@@ -19,6 +19,10 @@
     @Prop() private variant: any;
     @Prop() private position: string;
     // time until alert is dismissed, ex: 5 seconds
-    private timer: number = 5;
+    private timer: number | boolean = 5;
+
+    private mounted() {
+      if (this.variant === 'danger') { this.timer = true; }
+    }
   }
 </script>

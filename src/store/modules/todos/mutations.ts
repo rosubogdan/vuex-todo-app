@@ -1,12 +1,15 @@
 import State from '@/models/todo/todo.state';
 import Todo from '@/models/todo/todo';
 
+import { initialState } from '@/store/modules/todos/state';
+
 export const GET_TODOS_MUTATION = 'GET_TODOS_MUTATION';
 export const ADD_TODO_MUTATION = 'ADD_TODO_MUTATION';
 export const UPDATE_TODO_MUTATION = 'UPDATE_TODO_MUTATION';
 export const DELETE_TODO_MUTATION = 'DELETE_TODO_MUTATION';
 export const UPDATE_PER_PAGE_MUTATION = 'UPDATE_PER_PAGE_MUTATION';
 export const IS_LOADING_MUTATION = 'IS_LOADING_MUTATION';
+export const RESET_MUTATION = 'RESET_MUTATION';
 
 export const mutations = {
   GET_TODOS_MUTATION: (state: State, { todos, hasError, errorMessage }: State) => {
@@ -42,4 +45,7 @@ export const mutations = {
 
   IS_LOADING_MUTATION: (state: State, { isLoading }: any) => (state.isLoading = isLoading),
 
+  RESET_MUTATION: (state: State, payload: any) => {
+    Object.assign(state, initialState());
+  },
 };

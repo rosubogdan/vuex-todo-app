@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "db": "json-server db.json -w -p 8081",
-    "start": "npm-run-all --parallel db serve"
+    "start": "npm-run-all --parallel db serve",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:": "npm-run-all build deploy:hosting"
   },
   "dependencies": {
     "@types/vuelidate": "^0.7.8",

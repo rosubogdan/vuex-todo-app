@@ -1,21 +1,14 @@
 import State from '@/models/todo/todo.state';
-import Todo from '@/models/todo/todo';
+
+import { initialState } from './state';
+
 import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
 
-const state: State = {
-  todos: [],
-  todo: {} as Todo,
-  perPage: 5,
-  perPageOptions: [5, 10, 20, 50],
-  isLoading: false,
-  hasError: false,
-  errorMessage: '',
-  successMessage: '',
-};
+const state: State = initialState();
 
-export default {
+export const TODOS = {
   namespaced: true,
   state,
   getters,

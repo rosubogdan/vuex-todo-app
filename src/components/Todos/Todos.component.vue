@@ -2,10 +2,10 @@
   <div class="wrapper">
 
     <Loader :is-loading="IS_LOADING" />
-    <Alert :variant="ALERT.SUCCESS"
-           :position="ALERT.TOP"
-           v-if="showSuccessBanner">
-      <span class="text-center"> Todo added! </span>
+    <Alert v-if="HAS_ERROR"
+           :variant="ALERT.DANGER"
+           :position="ALERT.TOP">
+      <span class="text-center"> {{ERROR_MESSAGE}} </span>
     </Alert>
 
     <b-row class="text-center mb-3">
@@ -67,6 +67,7 @@
                  dark
                  hover
                  fixed
+                 show-empty
                  :sticky-header="true"
                  :no-border-collapse="true"
                  :busy="IS_LOADING"
@@ -82,6 +83,12 @@
               <strong> {{CONTENT.DEFAULT.LOADING}} </strong>
             </div>
           </template>
+
+          <!-- <template slot="empty">
+            <div class="text-center my-2">
+              <strong> No results found! </strong>
+            </div>
+          </template> -->
 
           <template slot="status"
                     slot-scope="row">
@@ -244,6 +251,7 @@
     PER_PAGE_OPTIONS,
     IS_LOADING,
     HAS_ERROR,
+    ERROR_MESSAGE,
   } from '@/store/modules/todos/getters';
 
   import {
@@ -263,7 +271,7 @@
   @Component({
     components: { TodoForm, Loader, Alert },
     computed: mapGetters({
-      IS_LOADING, ALL_TODOS, PER_PAGE, PER_PAGE_OPTIONS, HAS_ERROR,
+      IS_LOADING, ALL_TODOS, PER_PAGE, PER_PAGE_OPTIONS, HAS_ERROR, ERROR_MESSAGE,
     }),
   })
   export default class TodosComponent extends Vue {

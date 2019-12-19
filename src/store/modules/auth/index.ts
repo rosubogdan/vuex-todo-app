@@ -1,22 +1,14 @@
 import State from '@/models/auth/user.state';
-import User from '@/models/auth/user';
+
+import { initialState } from './state';
 
 import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
 
-const user: User = {} as User;
+const state: State = initialState();
 
-const state: State = {
-  user,
-  isLoggedIn: false,
-  isLoading: false,
-  hasError: false,
-  errorMessage: '',
-};
-
-
-export default {
+export const AUTH = {
   namespaced: true,
   state,
   getters,
