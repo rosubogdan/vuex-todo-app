@@ -1,0 +1,36 @@
+@import "./_variables";
+
+.PROFILE {
+  .profile-card {
+    background-color: transparent;
+    border-color: $white;
+    border-radius: 0px;
+    .card-header {
+      border-color: $green;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      h2 {
+        margin: 0px;
+      }
+      i.action-icon {
+        font-size: 1.5rem;
+        cursor: pointer;
+        &:hover {
+          color: $green;
+        }
+      }
+    }
+    .card-body {
+      display: inline-flex;
+      padding: 15px 5px 15px 15px;
+
+      .profile-content {
+        width: 100%;
+        .card-subtitle {
+          line-height: 2.5;
+        }
+      }
+    }
+  }
+}

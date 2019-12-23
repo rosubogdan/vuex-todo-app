@@ -45,7 +45,5 @@ export const mutations = {
 
   IS_LOADING_MUTATION: (state: State, { isLoading }: any) => (state.isLoading = isLoading),
 
-  RESET_MUTATION: (state: State, payload: any) => {
-    Object.assign(state, initialState());
-  },
+  RESET_MUTATION: (state: State, payload: any) => (Object.assign(state, initialState())),
 };
