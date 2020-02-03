@@ -53,13 +53,13 @@
               <b-form-select id="priority"
                              v-model="form.priority"
                              :size="SIZE.DEFAULT">
-                <option :value="null">
+                <option v-bind:value="null">
                   {{CONTENT.INPUT.PRIORITY_PLACEHOLDER}}
                 </option>
 
                 <option v-for="priority in priorities"
                         :key="priority.value"
-                        :value="priority.value">
+                        v-bind:value="priority.value">
                   {{priority.name}}
                 </option>
               </b-form-select>
@@ -79,7 +79,7 @@
                              v-model="form.status"
                              :size="SIZE.DEFAULT">
                 <template v-slot:first>
-                  <option :value="null"
+                  <option v-bind:value="null"
                           disabled>
                     {{CONTENT.INPUT.STATUS_PLACEHOLDER}}
                   </option>

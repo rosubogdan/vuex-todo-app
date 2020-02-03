@@ -3,8 +3,6 @@ import User from '@/models/auth/user';
 import { STORE_AUTH_MODULE } from '@/constants';
 import { GENERIC } from '@/store/mutations';
 
-import { initialState } from '@/store/modules/auth/state';
-
 import { REGISTER, LOGIN, LOGOUT } from '@/services/firebase.service';
 
 import {
