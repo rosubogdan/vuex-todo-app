@@ -11,13 +11,13 @@ export const LOGOUT_MUTATION = 'LOGOUT_MUTATION';
 
 export const mutations = {
 
-  REGISTER_MUTATION: (state: State, payload: any) => (set(state, payload)),
+  REGISTER_MUTATION: (state: State, payload: any): void => set(state, payload),
 
-  LOGIN_MUTATION: (state: State, payload: any) => (set(state, payload)),
+  LOGIN_MUTATION: (state: State, payload: any): void => set(state, payload),
 
-  LOGOUT_MUTATION: (state: State, payload: any) => (set(state, payload)),
+  LOGOUT_MUTATION: (state: State, payload: any): void => set(state, payload),
 
-  RESET_MUTATION: (state: State, payload: any) => (set(state, initialState())),
+  RESET_MUTATION: (state: State, payload: any): void => set(state, initialState()),
 
   IS_LOADING_MUTATION,
 };

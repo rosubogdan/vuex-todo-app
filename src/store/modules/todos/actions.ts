@@ -32,10 +32,9 @@ export const DELETE_TODO_ACTION = `${STORE_TODOS_MODULE}/DELETE_TODO_ACTION`;
 
 export const actions = {
 
-  FETCH_TODOS_ACTION: async ({ commit }: any) => {
+  FETCH_TODOS_ACTION: async ({ commit }: any): Promise<any> => {
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
-
       const todos = await GET_TODOS();
       if (todos.length > 0) {
         commit(GET_TODOS_MUTATION, { todos });
@@ -50,7 +49,7 @@ export const actions = {
 
   },
 
-  ADD_TODO_ACTION: async ({ commit }: any, addTodo: Todo) => {
+  ADD_TODO_ACTION: async ({ commit }: any, addTodo: Todo): Promise<any> => {
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
       const id = await ADD_TODO(addTodo);
@@ -64,7 +63,7 @@ export const actions = {
     }
   },
 
-  UPDATE_TODO_ACTION: async ({ commit }: any, updateTodo: Todo) => {
+  UPDATE_TODO_ACTION: async ({ commit }: any, updateTodo: Todo): Promise<any> => {
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
       await UPDATE_TODO(updateTodo);
@@ -79,8 +78,8 @@ export const actions = {
     }
   },
 
-  CHANGE_PER_PAGE_ACTION: async ({ commit }: any, filter: number) => {
-    // todo - use firebase pagination query
+  CHANGE_PER_PAGE_ACTION: async ({ commit }: any, filter: number): Promise<any> => {
+    // ! TODO - use firebase pagination query
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
       const response = await getFiltered(filter);
@@ -94,7 +93,7 @@ export const actions = {
     }
   },
 
-  DELETE_TODO_ACTION: async ({ commit }: any, id: number) => {
+  DELETE_TODO_ACTION: async ({ commit }: any, id: number): Promise<any> => {
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
       await DELETE_TODO(id);

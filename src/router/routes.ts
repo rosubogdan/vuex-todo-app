@@ -7,7 +7,7 @@ export const ROUTES = [
     path: '/login',
     name: 'Login',
     icon: 'fas fa-sign-in-alt',
-    component: () => import('@/views/Login.vue'),
+    component: (): any => import('@/views/Login.vue'),
     meta: {
       requiresAuth: false,
     },
@@ -16,7 +16,7 @@ export const ROUTES = [
     path: '/register',
     name: 'Register',
     icon: 'fas fa-users',
-    component: () => import('@/views/Register.vue'),
+    component: (): any => import('@/views/Register.vue'),
     meta: {
       requiresAuth: false,
     },
@@ -25,7 +25,7 @@ export const ROUTES = [
     path: '/',
     name: 'Home',
     icon: 'fas fa-home',
-    component: () => import('@/views/Home.vue'),
+    component: (): any => import('@/views/Home.vue'),
     meta: {
       requiresAuth: true,
     },
@@ -34,7 +34,7 @@ export const ROUTES = [
     path: '/todos',
     name: 'Todos',
     icon: 'far fa-check-circle',
-    component: () => import('@/views/Todos.vue'),
+    component: (): any => import('@/views/Todos.vue'),
     meta: {
       requiresAuth: true,
     },
@@ -43,7 +43,7 @@ export const ROUTES = [
     path: '/buy',
     name: 'Buy list',
     icon: 'fas fa-cart-arrow-down',
-    component: () => import('@/views/Buy.vue'),
+    component: (): any => import('@/views/Buy.vue'),
     meta: {
       requiresAuth: true,
     },
@@ -52,7 +52,7 @@ export const ROUTES = [
     path: '/profile',
     name: 'Profile',
     icon: 'fas fa-users-cog',
-    component: () => import('@/views/Profile.vue'),
+    component: (): any => import('@/views/Profile.vue'),
     meta: {
       requiresAuth: true,
     },

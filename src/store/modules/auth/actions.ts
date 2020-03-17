@@ -1,4 +1,6 @@
 import User from '@/models/auth/user';
+import { alert } from './state';
+import { ALERT } from '@/constants';
 
 import { STORE_AUTH_MODULE } from '@/constants';
 import { GENERIC } from '@/store/mutations';
@@ -18,7 +20,7 @@ export const RESET = `${STORE_AUTH_MODULE}/RESET`;
 
 export const actions = {
 
-  REGISTER_ACTION: async ({ commit }: any, user: User) => {
+  REGISTER_ACTION: async ({ commit }: any, user: User): Promise<any> => {
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
       await REGISTER(user);
@@ -31,21 +33,35 @@ export const actions = {
     }
   },
 
-  LOGIN_ACTION: async ({ commit }: any, user: User) => {
+  LOGIN_ACTION: async ({ commit }: any, user: User): Promise<any> => {
     try {
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
       const response: any = await LOGIN(user);
       const userInfo: Partial<User> = response.user;
-      commit(LOGIN_MUTATION, { user: userInfo, hasError: false });
+
+      commit(LOGIN_MUTATION,
+        {
+          user: userInfo,
+          alert,
+        });
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: false });
 
     } catch (error) {
-      commit(LOGIN_MUTATION, { user: null, hasError: true, errorMessage: error.message });
+      commit(LOGIN_MUTATION,
+        {
+          user: null,
+          alert: {
+            show: true,
+            type: ALERT.DANGER,
+            position: ALERT.BOTTOM,
+            message: 'TEST ALERT',
+          },
+        });
       commit(GENERIC.IS_LOADING_MUTATION, { isLoading: false });
     }
   },
 
-  LOGOUT_ACTION: async ({ commit }: any, payload: any) => {
+  LOGOUT_ACTION: async ({ commit }: any, payload: any): Promise<any> => {
     commit(GENERIC.IS_LOADING_MUTATION, { isLoading: true });
     await LOGOUT();
     commit(LOGOUT_MUTATION, { user: null, isLoggedIn: false });

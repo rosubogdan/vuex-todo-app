@@ -16,14 +16,14 @@
                        class="mb-3"
                        type="text"
                        v-model="form.title"
-                       :placeholder="CONTENT.INPUT.TITLE_PLACEHOLDER"
+                       :placeholder="INPUT.TITLE_PLACEHOLDER"
                        :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
                 <span class="danger"
-                      v-if="!$v.form.title.required">{{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.TITLE)}}</span>
+                      v-if="!$v.form.title.required">{{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.TITLE)}}</span>
               </div>
             </section>
 
@@ -35,7 +35,7 @@
                                max-rows="6"
                                type="text"
                                v-model="form.description"
-                               :placeholder="CONTENT.INPUT.DESCRIPTION_PLACEHOLDER"
+                               :placeholder="INPUT.DESCRIPTION_PLACEHOLDER"
                                :size="SIZE.DEFAULT">
               </b-form-textarea>
               <!-- Validation -->
@@ -43,7 +43,7 @@
                    v-if="$v.form.$error">
                 <span class="text-left danger"
                       v-if="!$v.form.description.maxLength">
-                  {{VALIDATION.MAX_LENGTH_ERROR(CONTENT.INPUT.DESCRIPTION,$v.form.description.$params.maxLength.max)}}
+                  {{VALIDATION.MAX_LENGTH_ERROR(INPUT.DESCRIPTION,$v.form.description.$params.maxLength.max)}}
                 </span>
               </div>
             </section>
@@ -54,7 +54,7 @@
                              v-model="form.priority"
                              :size="SIZE.DEFAULT">
                 <option v-bind:value="null">
-                  {{CONTENT.INPUT.PRIORITY_PLACEHOLDER}}
+                  {{INPUT.PRIORITY_PLACEHOLDER}}
                 </option>
 
                 <option v-for="priority in priorities"
@@ -68,7 +68,7 @@
                    v-if="$v.form.$error">
                 <span class="text-left danger"
                       v-if="!$v.form.priority.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.PRIORITY)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.PRIORITY)}}
                 </span>
               </div>
             </section>
@@ -81,19 +81,19 @@
                 <template v-slot:first>
                   <option v-bind:value="null"
                           disabled>
-                    {{CONTENT.INPUT.STATUS_PLACEHOLDER}}
+                    {{INPUT.STATUS_PLACEHOLDER}}
                   </option>
                 </template>
 
-                <option :value="false">{{CONTENT.DEFAULT.STATUS.INCOMPLETE}}</option>
-                <option :value="true">{{CONTENT.DEFAULT.STATUS.COMPLETE}}</option>
+                <option :value="false">{{DEFAULT.STATUS.INCOMPLETE}}</option>
+                <option :value="true">{{DEFAULT.STATUS.COMPLETE}}</option>
               </b-form-select>
               <!-- Validation -->
               <div class="errors text-left mb-3"
                    v-if="$v.form.$error">
                 <span class="text-left danger"
                       v-if="!$v.form.priority.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.STATUS)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.STATUS)}}
                 </span>
               </div>
             </section>
@@ -106,16 +106,26 @@
 </template>
 
 <script lang="ts">
+  // * vue
   import { Component, Prop, Vue } from 'vue-property-decorator';
   import { validationMixin } from 'vuelidate';
 
+  // * validation
   import { TodoFormValidation, VALIDATION } from '@/validations';
 
-  import { CONTENT, SIZE } from '@/constants';
+  // * models
   import { Priorities } from '@/models/todo/priorities';
-
   import Todo from '@/models/todo/todo';
 
+  // * constants
+  import {
+    INPUT,
+    BUTTON,
+    SIZE,
+    DEFAULT,
+  } from '@/constants';
+
+  // * component setup
   @Component({
     mixins: [validationMixin],
     validations: TodoFormValidation,
@@ -124,17 +134,21 @@
     @Prop() public todo: Todo;
     public priorities = Priorities;
 
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private VALIDATION = VALIDATION;
+    // * private readonly
+    private readonly SIZE: {} = SIZE;
+    private readonly INPUT: {} = INPUT;
+    private readonly BUTTON: {} = BUTTON;
+    private readonly DEFAULT: {} = DEFAULT;
+    private readonly VALIDATION: {} = VALIDATION;
 
+    // * private
     private form: Todo = this.todo;
 
     constructor() {
       super();
     }
 
-    private async beforeDestroy() {
+    private async beforeDestroy(): Promise<void> {
       delete this.form;
     }
   }

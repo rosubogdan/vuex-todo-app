@@ -1,20 +1,35 @@
 import { API_URL } from './api';
 import { CONTENT_ROUTES } from './routes';
-import { CONTENT } from './content/content';
+import { DEFAULT } from './defaults';
+import { BUTTON } from './button';
+import { INPUT } from './input';
+import { TABLE_FIELDS } from './table';
 import { SIZE, LOADER, ALERT } from '@/constants/style';
-import { TABLE_FIELDS } from './content/table';
 import { STORE_AUTH_MODULE, STORE_TODOS_MODULE } from './modules';
 
-
+import {
+  APP,
+  REGISTER,
+  LOGIN,
+  HOME,
+  TODO,
+} from './content';
 
 export {
   API_URL,
   CONTENT_ROUTES,
-  CONTENT,
+  DEFAULT,
+  BUTTON,
+  INPUT,
+  TABLE_FIELDS,
   SIZE,
   LOADER,
   ALERT,
-  TABLE_FIELDS,
   STORE_AUTH_MODULE,
   STORE_TODOS_MODULE,
+  APP,
+  REGISTER,
+  LOGIN,
+  HOME,
+  TODO,
 };

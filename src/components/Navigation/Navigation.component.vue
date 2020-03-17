@@ -5,7 +5,7 @@
               variant="dark"
               fixed="top">
       <b-navbar-brand class="logo"
-                      :title="CONTENT.APP.TITLE">
+                      :title="APP.TITLE">
         <router-link :to="CONTENT_ROUTES.HOME.path">
           <i class="far fa-check-circle"></i>
         </router-link>
@@ -57,24 +57,36 @@
 </template>
 
 <script lang="ts">
+  // * vue
   import { Component, Vue } from 'vue-property-decorator';
-  import { mapGetters, mapActions } from 'vuex';
+  import { mapGetters } from 'vuex';
+
+  // * actions
   import { LOGOUT_ACTION } from '@/store/modules/auth/actions';
+
+  // * getters
   import { LOGIN_STATUS } from '@/store/modules/auth/getters';
+
+  // * routes
   import { ROUTES } from '@/router/routes';
+
+  // * constants
   import {
-    CONTENT,
+    APP,
     CONTENT_ROUTES,
   } from '@/constants';
 
+  // * component setup
   @Component({
     computed: mapGetters({ LOGIN_STATUS }),
-    methods: mapActions({ LOGOUT_ACTION }),
   })
   export default class NavigationComponent extends Vue {
-    private CONTENT = CONTENT;
-    private ROUTES = ROUTES;
-    private CONTENT_ROUTES = CONTENT_ROUTES;
+    // * private readonly
+    private readonly APP: {} = APP;
+    private readonly ROUTES: {} = ROUTES;
+    private readonly CONTENT_ROUTES: {} = CONTENT_ROUTES;
+
+    // * private
     private LOGGED_IN_ROUTES: any = [];
     private LOGGED_OUT_ROUTES: any = [];
 
@@ -82,12 +94,12 @@
       super();
     }
 
-    private created() {
+    private created(): void {
       this.LOGGED_IN_ROUTES = ROUTES.filter((route: any) => route.meta && route.meta.requiresAuth);
       this.LOGGED_OUT_ROUTES = ROUTES.filter((route: any) => route.meta && !route.meta.requiresAuth);
     }
 
-    private async Logout(e: any) {
+    private async Logout(e: any): Promise<void> {
       e.preventDefault();
       await this.$store.dispatch(LOGOUT_ACTION);
       await this.$store.dispatch('RESET_ALL');

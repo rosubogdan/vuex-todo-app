@@ -31,3 +31,13 @@ yarn run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+// vue
+// depencies
+// services
+// validation
+// components
+// models
+// actions
+// getters
+// constants

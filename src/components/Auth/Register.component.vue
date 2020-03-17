@@ -5,7 +5,7 @@
 
     <b-row class="text-center mb-3">
       <b-col sm=12>
-        <h3>{{CONTENT.REGISTER.HEADER}}</h3>
+        <h3>{{REGISTER.HEADER}}</h3>
       </b-col>
     </b-row>
     <b-row class="text-center mb-3">
@@ -24,7 +24,7 @@
                        class="mb-3"
                        type="text"
                        v-model.trim="form.firstName"
-                       :placeholder="CONTENT.INPUT.FIRST_NAME"
+                       :placeholder="INPUT.FIRST_NAME"
                        :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
@@ -32,11 +32,11 @@
                    v-if="$v.form.$error">
                 <span class="danger"
                       v-if="!$v.form.firstName.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.FIRST_NAME)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.FIRST_NAME)}}
                 </span>
                 <span class="danger"
                       v-if="!$v.form.firstName.alpha">
-                  {{VALIDATION.FIELD_ALPHA_ERROR(CONTENT.INPUT.FIRST_NAME)}}
+                  {{VALIDATION.FIELD_ALPHA_ERROR(INPUT.FIRST_NAME)}}
                 </span>
               </div>
             </section>
@@ -47,7 +47,7 @@
                        class="mb-3"
                        type="text"
                        v-model.trim="form.lastName"
-                       :placeholder="CONTENT.INPUT.LAST_NAME"
+                       :placeholder="INPUT.LAST_NAME"
                        :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
@@ -55,11 +55,11 @@
                    v-if="$v.form.$error">
                 <span class="danger"
                       v-if="!$v.form.lastName.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.LAST_NAME)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.LAST_NAME)}}
                 </span>
                 <span class="danger"
                       v-if="!$v.form.lastName.alpha">
-                  {{VALIDATION.FIELD_ALPHA_ERROR(CONTENT.INPUT.LAST_NAME)}}
+                  {{VALIDATION.FIELD_ALPHA_ERROR(INPUT.LAST_NAME)}}
                 </span>
               </div>
             </section>
@@ -70,7 +70,7 @@
                        class="mb-3"
                        type="text"
                        v-model.trim="form.username"
-                       :placeholder="CONTENT.INPUT.USERNAME"
+                       :placeholder="INPUT.USERNAME"
                        :size="SIZE.DEFAULT">
               </b-input>
             </section>
@@ -81,7 +81,7 @@
                        class="mb-3"
                        type="email"
                        v-model.trim="form.email"
-                       :placeholder="CONTENT.INPUT.EMAIL_PLACEHOLDER"
+                       :placeholder="INPUT.EMAIL_PLACEHOLDER"
                        :size="SIZE.DEFAULT">
               </b-input>
               <!-- Validation -->
@@ -89,7 +89,7 @@
                    v-if="$v.form.$error">
                 <span class="danger"
                       v-if="!$v.form.email.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.EMAIL)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.EMAIL)}}
                 </span>
                 <span class="danger"
                       v-if="!$v.form.email.email">
@@ -104,8 +104,8 @@
                 <b-form-input id="password"
                               class="mb-3"
                               v-model.trim="form.password"
-                              :placeholder="CONTENT.INPUT.PASSWORD_PLACEHOLDER"
-                              :type="showPassword ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
+                              :placeholder="INPUT.PASSWORD_PLACEHOLDER"
+                              :type="showPassword ? DEFAULT.TYPE.TEXT: DEFAULT.TYPE.PASSWORD"
                               :size="SIZE.DEFAULT">
                 </b-form-input>
                 <b-input-group-append>
@@ -124,11 +124,11 @@
                    v-if="$v.form.$error">
                 <span class="text-left danger"
                       v-if="!$v.form.password.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.PASSWORD)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.PASSWORD)}}
                 </span>
                 <span class="text-left danger"
                       v-if="!$v.form.password.minLength">
-                  {{VALIDATION.MIN_LENGTH_ERROR(CONTENT.INPUT.PASSWORD,$v.form.password.$params.minLength.min)}}
+                  {{VALIDATION.MIN_LENGTH_ERROR(INPUT.PASSWORD,$v.form.password.$params.minLength.min)}}
                 </span>
               </div>
             </section>
@@ -139,8 +139,8 @@
                 <b-form-input id="confirm_password"
                               class="mb-3"
                               v-model.trim="form.confirmPassword"
-                              :placeholder="CONTENT.INPUT.CONFIRM_PASSWORD_PLACEHOLDER"
-                              :type="showConfirmPassword ? CONTENT.DEFAULT.TYPE.TEXT: CONTENT.DEFAULT.TYPE.PASSWORD"
+                              :placeholder="INPUT.CONFIRM_PASSWORD_PLACEHOLDER"
+                              :type="showConfirmPassword ? DEFAULT.TYPE.TEXT: DEFAULT.TYPE.PASSWORD"
                               :size="SIZE.DEFAULT">
                 </b-form-input>
                 <b-input-group-append>
@@ -161,7 +161,7 @@
 
                 <span class="text-left danger"
                       v-if="!$v.form.confirmPassword.required">
-                  {{VALIDATION.FIELD_REQUIRED_ERROR(CONTENT.INPUT.CONFIRM_PASSWORD)}}
+                  {{VALIDATION.FIELD_REQUIRED_ERROR(INPUT.CONFIRM_PASSWORD)}}
                 </span>
                 <span class="text-left danger"
                       v-else-if="!$v.form.confirmPassword.sameAsPassword">
@@ -181,7 +181,7 @@
             <b-button variant="success"
                       type="submit"
                       :size="SIZE.DEFAULT">
-              {{CONTENT.BUTTON.REGISTER}}
+              {{BUTTON.REGISTER}}
             </b-button>
           </b-form>
         </div>
@@ -191,39 +191,72 @@
 </template>
 
 <script lang="ts">
+  // * vue
   import { Component, Vue } from 'vue-property-decorator';
   import { mapGetters } from 'vuex';
+  import { validationMixin } from 'vuelidate';
+
+  // * validation
+  import { RegisterFormValidation, VALIDATION } from '@/validations';
+
+  // * components
   import Loader from '@/common/Loader.component.vue';
   import Alert from '@/common/Alert.component.vue';
 
-  import { validationMixin } from 'vuelidate';
-  import { RegisterFormValidation, VALIDATION } from '@/validations';
-
-  import { CONTENT, CONTENT_ROUTES, SIZE, ALERT } from '@/constants';
-
-  import { IS_LOADING, HAS_ERROR, ERROR_MESSAGE } from '@/store/modules/auth/getters';
-  import { REGISTER_ACTION } from '@/store/modules/auth/actions';
-
+  // * models
   import { RegisterForm } from '@/models/forms/registerForm';
 
+  // * actions
+  import { REGISTER_ACTION } from '@/store/modules/auth/actions';
+
+  // * getters
+  import {
+    LOGIN_STATUS,
+    IS_LOADING,
+    HAS_ERROR,
+    ERROR_MESSAGE,
+  } from '@/store/modules/auth/getters';
+
+
+  // * constants
+  import {
+    REGISTER,
+    DEFAULT,
+    CONTENT_ROUTES,
+    INPUT,
+    BUTTON,
+    SIZE,
+    ALERT,
+  } from '@/constants';
+
+  // * component setup
   @Component({
     components: { Loader, Alert },
     mixins: [validationMixin],
     validations: RegisterFormValidation,
-    computed: mapGetters({ IS_LOADING, HAS_ERROR, ERROR_MESSAGE }),
+    computed: mapGetters({
+      IS_LOADING,
+      LOGIN_STATUS,
+      HAS_ERROR,
+      ERROR_MESSAGE,
+    }),
   })
   export default class RegisterComponent extends Vue {
-    private ALERT = ALERT;
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private VALIDATION = VALIDATION;
+    // * private readonly
+    private readonly REGISTER: {} = REGISTER;
+    private readonly ALERT: {} = ALERT;
+    private readonly SIZE: {} = SIZE;
+    private readonly INPUT: {} = INPUT;
+    private readonly BUTTON: {} = BUTTON;
+    private readonly DEFAULT: {} = DEFAULT;
+    private readonly VALIDATION: {} = VALIDATION;
 
+    // * private
     private form: RegisterForm = {} as RegisterForm;
-
     private showPassword: boolean = false;
     private showConfirmPassword: boolean = false;
 
-    private async handleSubmit() {
+    private async handleSubmit(): Promise<void> {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         await this.$store.dispatch(REGISTER_ACTION, this.form);

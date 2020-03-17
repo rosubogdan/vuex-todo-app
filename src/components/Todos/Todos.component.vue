@@ -11,7 +11,7 @@
     <b-row class="text-center mb-3">
       <b-col sm=12>
         <h3>
-          <i class="far fa-check-circle"></i> {{CONTENT.TODO.HEADER}}
+          <i class="far fa-check-circle"></i> {{TODO.HEADER}}
         </h3>
       </b-col>
     </b-row>
@@ -28,7 +28,7 @@
             <b-form-input id="filterInput"
                           type="search"
                           v-model.trim="searchTerm"
-                          :placeholder="CONTENT.INPUT.SEARCH_PLACEHOLDER"
+                          :placeholder="INPUT.SEARCH_PLACEHOLDER"
                           :size="SIZE.DEFAULT">
             </b-form-input>
           </b-input-group>
@@ -52,7 +52,7 @@
       <!-- Add new button -->
       <b-col sm="1">
         <b-button variant="success"
-                  :title="CONTENT.DEFAULT.TITLE.ADD"
+                  :title="DEFAULT.TITLE.ADD"
                   :size="SIZE.DEFAULT"
                   @click="openAddEditModal()">
           <i class="fas fa-plus"></i>
@@ -80,7 +80,7 @@
           <template v-slot:table-busy>
             <div class="text-center my-2">
               <b-spinner class="align-middle"></b-spinner>
-              <strong> {{CONTENT.DEFAULT.LOADING}} </strong>
+              <strong> {{DEFAULT.LOADING}} </strong>
             </div>
           </template>
 
@@ -92,7 +92,7 @@
 
           <template slot="status"
                     slot-scope="row">
-            {{row.item.status ? CONTENT.DEFAULT.STATUS.COMPLETE: CONTENT.DEFAULT.STATUS.INCOMPLETE}}
+            {{row.item.status ? DEFAULT.STATUS.COMPLETE: DEFAULT.STATUS.INCOMPLETE}}
           </template>
 
           <template slot="priority"
@@ -103,7 +103,7 @@
           <template slot="action"
                     slot-scope="row">
             <div class="action-buttons">
-              <i :title="row.detailsShowing ? CONTENT.DEFAULT.TITLE.CLOSE : CONTENT.DEFAULT.TITLE.SHOW"
+              <i :title="row.detailsShowing ? DEFAULT.TITLE.CLOSE : DEFAULT.TITLE.SHOW"
                  :class="[row.detailsShowing ? 'fas fa-eye-slash': 'far fa-eye']"
                  class="success"
                  @click="row.toggleDetails">
@@ -124,14 +124,14 @@
           <template v-slot:row-details="row">
             <b-tabs active-nav-item-class="tab-active"
                     align="center">
-              <b-tab :title="CONTENT.DEFAULT.TABS.DETAILS"
+              <b-tab :title="DEFAULT.TABS.DETAILS"
                      class="mt-3"
                      active>
                 <div class="todo-details mt-3">
                   <h1>{{row.item.title}}</h1>
                   <p>{{row.item.description}}</p>
                   <p>Priority: {{getPriority(row.item.priority)}}</p>
-                  <p>Status: <span :class="[row.item.status ? 'success': 'danger']">{{row.item.status ? CONTENT.DEFAULT.STATUS.COMPLETE: CONTENT.DEFAULT.STATUS.INCOMPLETE}}</span>
+                  <p>Status: <span :class="[row.item.status ? 'success': 'danger']">{{row.item.status ? DEFAULT.STATUS.COMPLETE: DEFAULT.STATUS.INCOMPLETE}}</span>
                   </p>
                 </div>
               </b-tab>
@@ -165,7 +165,7 @@
                         @click="handleOk">
                 <i class="fa fa-thumbs-up"
                    aria-hidden="true">
-                </i> {{CONTENT.BUTTON.SAVE}}
+                </i> {{BUTTON.SAVE}}
               </b-button>
 
               <b-button variant="danger"
@@ -173,7 +173,7 @@
                         @click="cancelAddEditModal">
                 <i class="fa fa-times"
                    aria-hidden="true">
-                </i> {{CONTENT.BUTTON.CANCEL}}
+                </i> {{BUTTON.CANCEL}}
               </b-button>
 
             </div>
@@ -194,7 +194,7 @@
 
         <div class="text-center mt-3">
           <div class="mb-3">
-            <p>{{CONTENT.TODO.DELETE_CONFIRMATION}}</p>
+            <p>{{TODO.DELETE_CONFIRMATION}}</p>
           </div>
 
           <div class="confirm mb-3 mt-3">
@@ -203,14 +203,14 @@
                       :size="SIZE.DEFAULT"
                       @click="confirmDelete">
               <i class="fa fa-thumbs-up"
-                 aria-hidden="true"></i> {{CONTENT.BUTTON.YES}}
+                 aria-hidden="true"></i> {{BUTTON.YES}}
             </b-button>
 
             <b-button variant="danger"
                       :size="SIZE.DEFAULT"
                       @click="cancelDeleteModal">
               <i class="fa fa-times"
-                 aria-hidden="true"></i> {{CONTENT.BUTTON.NO}}
+                 aria-hidden="true"></i> {{BUTTON.NO}}
             </b-button>
 
           </div>
@@ -236,15 +236,31 @@
 </template>
 
 <script lang="ts">
+  // * vue
   import { Component, Vue } from 'vue-property-decorator';
   import { mapGetters } from 'vuex';
+
+  // * services
+  import { getPriority } from '@/services';
+
+  // * components
   import Loader from '@/common/Loader.component.vue';
   import Alert from '@/common/Alert.component.vue';
-
   import TodoForm from '@/components/Todos/TodoForm.component.vue';
 
-  import { CONTENT, SIZE, ALERT, TABLE_FIELDS } from '@/constants';
+  // * models
+  import Todo from '@/models/todo/todo';
 
+  // * actions
+  import {
+    FETCH_TODOS_ACTION,
+    CHANGE_PER_PAGE_ACTION,
+    ADD_TODO_ACTION,
+    UPDATE_TODO_ACTION,
+    DELETE_TODO_ACTION,
+  } from '@/store/modules/todos/actions';
+
+  // * getters
   import {
     ALL_TODOS,
     PER_PAGE,
@@ -254,72 +270,77 @@
     ERROR_MESSAGE,
   } from '@/store/modules/todos/getters';
 
+  // * constants
   import {
-    FETCH_TODOS_ACTION,
-    CHANGE_PER_PAGE_ACTION,
-    ADD_TODO_ACTION,
-    UPDATE_TODO_ACTION,
-    DELETE_TODO_ACTION,
-  } from '@/store/modules/todos/actions';
+    TODO,
+    ALERT,
+    SIZE,
+    INPUT,
+    BUTTON,
+    DEFAULT,
+    TABLE_FIELDS,
+  } from '@/constants';
 
-
-  import Todo from '@/models/todo/todo';
-
-  import { getPriority } from '@/services';
-
-
+  // * component setup
   @Component({
     components: { TodoForm, Loader, Alert },
     computed: mapGetters({
-      IS_LOADING, ALL_TODOS, PER_PAGE, PER_PAGE_OPTIONS, HAS_ERROR, ERROR_MESSAGE,
+      IS_LOADING,
+      ALL_TODOS,
+      PER_PAGE,
+      PER_PAGE_OPTIONS,
+      HAS_ERROR,
+      ERROR_MESSAGE,
     }),
   })
   export default class TodosComponent extends Vue {
+    // * private readonly
+    private readonly TODO: {} = TODO;
+    private readonly ALERT: {} = ALERT;
+    private readonly SIZE: {} = SIZE;
+    private readonly INPUT: {} = INPUT;
+    private readonly BUTTON: {} = BUTTON;
+    private readonly DEFAULT: {} = DEFAULT;
+    private readonly TABLE_FIELDS: {} = TABLE_FIELDS;
 
-    private ALERT = ALERT;
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private TABLE_FIELDS = TABLE_FIELDS;
+    // * private
     private perPage: number = this.$store.getters[PER_PAGE];
     private searchTerm = null;
     private deleteItemId: any = null;
     private totalRows: number = 1;
     private currentPage: number = 1;
-
     private addNew: boolean = true;
     private showSuccessBanner: boolean = false;
-
     private getPriority = getPriority;
-
     private todo: Partial<Todo> = {};
 
     constructor() {
       super();
     }
 
-    public async created() {
+    public async created(): Promise<void> {
       if (this.$store.getters[ALL_TODOS].length === 0) {
         await this.$store.dispatch(FETCH_TODOS_ACTION);
       }
     }
 
-    private changePerPage() {
+    private changePerPage(): void {
       this.$store.dispatch(CHANGE_PER_PAGE_ACTION, this.perPage);
     }
 
-    // Add/Edit Todo
-    private openAddEditModal(todo: any) {
+    // * Add/Edit Todo
+    private openAddEditModal(todo: any): void {
       if (todo) { delete todo.isTrusted; }
       this.todo = { ...todo };
       this.$bvModal.show('add-edit-modal');
     }
 
-    private cancelAddEditModal() {
+    private cancelAddEditModal(): void {
       this.todo = {};
       this.$bvModal.hide('add-edit-modal');
     }
 
-    private handleOk(bvModalEvt: any) {
+    private handleOk(bvModalEvt: any): void {
       bvModalEvt.preventDefault();
       const todoFormRef: any = this.$refs.todoForm;
       todoFormRef.$v.$touch();
@@ -328,7 +349,7 @@
       }
     }
 
-    private async handleSubmit() {
+    private async handleSubmit(): Promise<void> {
       if (this.addNew) {
         await this.$store.dispatch(ADD_TODO_ACTION, this.todo);
       } else {
@@ -337,20 +358,19 @@
       this.cancelAddEditModal();
     }
 
-    // Delete Todo
-
-    private openDeleteModal(id: any) {
+    // * Delete Todo
+    private openDeleteModal(id: any): void {
       this.deleteItemId = id;
       this.$bvModal.show('delete-modal');
 
     }
 
-    private cancelDeleteModal() {
+    private cancelDeleteModal(): void {
       this.deleteItemId = null;
       this.$bvModal.hide('delete-modal');
     }
 
-    private async confirmDelete() {
+    private async confirmDelete(): Promise<void> {
       await this.$store.dispatch(DELETE_TODO_ACTION, this.deleteItemId);
       this.cancelDeleteModal();
     }

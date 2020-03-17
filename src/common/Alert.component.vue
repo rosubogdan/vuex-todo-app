@@ -1,7 +1,7 @@
 <template>
   <div class="alert-container">
     <b-alert :class="`position-fixed fixed-${position} m-0 rounded-0`"
-             :show="timer"
+             :show="show"
              :variant="variant"
              dismissible>
       <slot></slot>
@@ -11,18 +11,17 @@
 
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
-
-
-  @Component({
-  })
+  @Component({})
   export default class Alert extends Vue {
     @Prop() private variant: any;
     @Prop() private position: string;
-    // time until alert is dismissed, ex: 5 seconds
+    @Prop() private show: number;
+    // ? time until alert is dismissed, ex: 5 seconds
     private timer: number | boolean = 5;
 
     private mounted() {
-      if (this.variant === 'danger') { this.timer = true; }
+      //   if (this.variant === 'danger') { this.timer = true; }
+      // this.timer = this.show;
     }
   }
 </script>

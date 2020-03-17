@@ -8,10 +8,10 @@
         <div class="card-wrapper">
           <router-link :to="CONTENT_ROUTES.TODOS.path">
             <i class="far fa-check-circle"></i>
-            <h3>{{CONTENT.HOME.TODO_CARD.TITLE}}</h3>
+            <h3>{{HOME.TODO_CARD.TITLE}}</h3>
             <b-button variant="success"
                       :size="SIZE.DEFAULT">
-              {{CONTENT.BUTTON.GO}}
+              {{BUTTON.GO}}
             </b-button>
           </router-link>
         </div>
@@ -23,10 +23,10 @@
         <div class="card-wrapper">
           <router-link :to="CONTENT_ROUTES.BUY.path">
             <i class="fas fa-cart-arrow-down"></i>
-            <h3>{{CONTENT.HOME.BUY_CARD.TITLE}}</h3>
+            <h3>{{HOME.BUY_CARD.TITLE}}</h3>
             <b-button variant="success"
                       :size="SIZE.DEFAULT">
-              {{CONTENT.BUTTON.GO}}
+              {{BUTTON.GO}}
             </b-button>
           </router-link>
         </div>
@@ -36,21 +36,33 @@
     <b-row class="text-center mt-3">
       <b-col sm="12"
              class="copy">
-        <p>{{CONTENT.HOME.COPY}}</p>
+        <p>{{HOME.COPY}}</p>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script lang="ts">
+  // * vue
   import { Component, Vue } from 'vue-property-decorator';
-  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
+  // * constants
+  import {
+    HOME,
+    BUTTON,
+    SIZE,
+    CONTENT_ROUTES,
+  } from '@/constants';
+
+  // * component setup
   @Component({})
   export default class HomeComponent extends Vue {
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private CONTENT_ROUTES = CONTENT_ROUTES;
+    // * private readonly
+    private readonly HOME: {} = HOME;
+    private readonly SIZE: {} = SIZE;
+    private readonly BUTTON: {} = BUTTON;
+    private readonly CONTENT_ROUTES: {} = CONTENT_ROUTES;
+
     constructor() {
       super();
     }

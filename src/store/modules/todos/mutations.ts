@@ -15,14 +15,14 @@ export const UPDATE_PER_PAGE_MUTATION = 'UPDATE_PER_PAGE_MUTATION';
 export const RESET_MUTATION = 'RESET_MUTATION';
 
 export const mutations = {
-  GET_TODOS_MUTATION: (state: State, payload: any) => set(state, payload),
+  GET_TODOS_MUTATION: (state: State, payload: any): void => set(state, payload),
 
-  ADD_TODO_MUTATION: (state: State, payload: any) => {
+  ADD_TODO_MUTATION: (state: State, payload: any): void => {
     if (payload.todo) { state.todos.unshift(payload.todo); }
     set(state, payload);
   },
 
-  UPDATE_TODO_MUTATION: (state: State, payload: any) => {
+  UPDATE_TODO_MUTATION: (state: State, payload: any): void => {
     if (payload.todo) {
       state.todos = state.todos.map((todo: Todo) => {
         if (todo.id === payload.todo.id) {
@@ -34,13 +34,13 @@ export const mutations = {
     set(state, payload);
   },
 
-  UPDATE_PER_PAGE_MUTATION: (state: State, value: number) => state.perPage = value,
+  UPDATE_PER_PAGE_MUTATION: (state: State, value: number): number => state.perPage = value,
 
-  DELETE_TODO_MUTATION: (state: State, id: number) => {
+  DELETE_TODO_MUTATION: (state: State, id: number): void => {
     state.todos = state.todos.filter((todo: Todo) => todo.id !== id);
   },
 
-  RESET_MUTATION: (state: State, payload: any) => set(state, initialState()),
+  RESET_MUTATION: (state: State, payload: any): void => set(state, initialState()),
 
   IS_LOADING_MUTATION,
 };

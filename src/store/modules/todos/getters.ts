@@ -10,11 +10,11 @@ export const ERROR_MESSAGE = `${STORE_TODOS_MODULE}/ERROR_MESSAGE`;
 export const SUCCESS_MESSAGE = `${STORE_TODOS_MODULE}/SUCCESS_MESSAGE`;
 
 export const getters = {
-  ALL_TODOS: (state: State) => state.todos,
-  PER_PAGE: (state: State) => state.perPage,
-  PER_PAGE_OPTIONS: (state: State) => state.perPageOptions,
-  IS_LOADING: (state: State) => state.isLoading,
-  HAS_ERROR: (state: State) => state.hasError,
-  ERROR_MESSAGE: (state: State) => state.errorMessage,
-  SUCCESS_MESSAGE: (state: State) => state.successMessage,
+  ALL_TODOS: (state: State): any => state.todos,
+  PER_PAGE: (state: State): number => state.perPage,
+  PER_PAGE_OPTIONS: (state: State): number[] => state.perPageOptions,
+  IS_LOADING: (state: State): boolean => state.isLoading,
+  HAS_ERROR: (state: State): boolean => state.hasError,
+  ERROR_MESSAGE: (state: State): string => state.errorMessage,
+  SUCCESS_MESSAGE: (state: State): string => state.successMessage,
 };

@@ -51,19 +51,24 @@
 </template>
 
 <script lang="ts">
+  // * vue
   import { Component, Vue } from 'vue-property-decorator';
-  import { CONTENT, CONTENT_ROUTES, SIZE } from '@/constants';
 
+  // * constant
+  import { SIZE, CONTENT_ROUTES } from '@/constants';
+
+  // * component setup
   @Component({})
   export default class ProfileComponent extends Vue {
-    private SIZE = SIZE;
-    private CONTENT = CONTENT;
-    private CONTENT_ROUTES = CONTENT_ROUTES;
+    // * private readonly
+    private readonly SIZE: {} = SIZE;
+    private readonly CONTENT_ROUTES: {} = CONTENT_ROUTES;
+
     constructor() {
       super();
     }
 
-    private openModal() {
+    private openModal(): void {
       this.$bvModal.show('update-profile-modal');
     }
   }
